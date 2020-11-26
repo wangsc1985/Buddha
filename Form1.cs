@@ -62,10 +62,10 @@ namespace Buddha
                 var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
                 abc += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
                     ":", minite < 10 ? "0" + minite : minite + "",
-                    ":", second < 10 ? "0" + second : second + "", $"      {(int)(a.duration / (60 * 1000 * 10))}", "\n");
+                    ":", second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
+                count += a.count;
             }
             label3.Text = abc;
-            count = (int)(c / (60 * 1000 * 10));
             label2.Text = count + "";
         }
 
@@ -78,7 +78,7 @@ namespace Buddha
                 timer1.Stop();
                 mci.Stop();
             }
-            if (start != null)
+            if (start.Year==DateTime.Now.Year)
             {
                 DataContext.AddRecord(new Record(start, (long)duration, (int)(duration / (60 * 1000 * 10)), "", 0));
                 DataContext.DisConnect();
