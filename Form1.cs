@@ -132,7 +132,7 @@ namespace Buddha
                         currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                         timer1.Stop();
                         mci.Pause();
-                        this.BackColor = Color.DarkKhaki;
+                        this.BackColor = Color.DarkRed;
                         isPlaying = false;
                     }
                     break;
