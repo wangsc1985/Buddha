@@ -87,7 +87,7 @@ namespace Buddha
             }
 
             
-            labelTotalCount.Text = $"{todayTotalCount} X 1080 = { string.Format("{0:N0}", todayTotalCount * 1080)}";
+            labelTotalCount.Text = $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}";
             label3.Text = historyRecordstr;
         }
 

@@ -38,6 +38,7 @@
             this.labelWisdom = new System.Windows.Forms.Label();
             this.labelTotalCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -113,7 +114,7 @@
             this.labelTotalCount.AutoSize = true;
             this.labelTotalCount.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTotalCount.ForeColor = System.Drawing.Color.White;
-            this.labelTotalCount.Location = new System.Drawing.Point(3, 33);
+            this.labelTotalCount.Location = new System.Drawing.Point(3, 45);
             this.labelTotalCount.Name = "labelTotalCount";
             this.labelTotalCount.Size = new System.Drawing.Size(39, 33);
             this.labelTotalCount.TabIndex = 1;
@@ -125,12 +126,21 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.label3);
+            this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.labelTotalCount);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(244, 393);
             this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 12);
+            this.label1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -168,6 +178,7 @@
         private System.Windows.Forms.Label labelWisdom;
         private System.Windows.Forms.Label labelTotalCount;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
