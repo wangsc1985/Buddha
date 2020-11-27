@@ -69,9 +69,13 @@ namespace Buddha
                 var second = (int)(a.duration / 1000 % 60);
                 var minite = (int)(a.duration / (60 * 1000) % 60);
                 var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{a.startDateTime.ToLongTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
-                    ":", minite < 10 ? "0" + minite : minite + "",
-                    ":", second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
+                if(hour>0)
+                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "", ":",
+                    minite < 10 ? "0" + minite : minite + "", ":",
+                    second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
+                else
+                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", minite < 10 ? "0" + minite : minite + "", ":",
+                    second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
                 todayTotalCount += a.count;
             }
 
@@ -80,13 +84,14 @@ namespace Buddha
                 var second = (int)(currentRecord.duration / 1000 % 60);
                 var minite = (int)(currentRecord.duration / (60 * 1000) % 60);
                 var hour = (int)(currentRecord.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToLongTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
+                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
                     ":", minite < 10 ? "0" + minite : minite + "",
                     ":", second < 10 ? "0" + second : second + "", $"      {currentRecord.count}", "\n");
                 todayTotalCount += currentRecord.count;
             }
 
-            labelTotalCount.Text = todayTotalCount + "";
+            
+            labelTotalCount.Text = $"{todayTotalCount} X 1080 = { string.Format("{0:N0}", todayTotalCount * 1080)}";
             label3.Text = historyRecordstr;
         }
 
