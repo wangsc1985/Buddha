@@ -69,12 +69,8 @@ namespace Buddha
                 var second = (int)(a.duration / 1000 % 60);
                 var minite = (int)(a.duration / (60 * 1000) % 60);
                 var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
-                if(hour>0)
                 historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "", ":",
                     minite < 10 ? "0" + minite : minite + "", ":",
-                    second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
-                else
-                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", minite < 10 ? "0" + minite : minite + "", ":",
                     second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
                 todayTotalCount += a.count;
             }
@@ -141,7 +137,7 @@ namespace Buddha
                     }
                     break;
                 case Keys.Enter:
-                    var dd = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
+                    var dd = isPlaying? DateTime.Now.Subtract(currentStartTime).TotalMilliseconds:0 + currentDuration;
                     var cc = (int)(dd / (60 * 1000 * 10));
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
