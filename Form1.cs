@@ -21,9 +21,13 @@ namespace Buddha
         bool isPlaying = false;
 
         clsMCI mci = new clsMCI();
-        double duration = 0;
-        int count = 0;
-        DateTime start;
+        int todayTotalCount = 0;
+        double currentDuration = 0;
+        DateTime currentStartTime;
+
+        DataContext dataContext = new DataContext();
+        // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
+        Record currentRecord = new Record();
 
         public Form1()
         {
@@ -38,6 +42,9 @@ namespace Buddha
             this.Top = 0;
             this.Width = screenWidth;
             this.Height = screenHeight;
+
+
+            dataContext.Connect();
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
@@ -48,25 +55,39 @@ namespace Buddha
         private void Form1_Load(object sender, EventArgs e)
         {
             mci.FileName = $"{exePath}\\1.mp3";
+            labelCount.Text = "0";
+            loadHistoryRecords();
+        }
 
-            string abc = "";
-            DataContext.Connect();
-            var records = DataContext.GetRecords(DateTime.Today);
-            long c = 0;
-            foreach (var a in records)
+        private void loadHistoryRecords()
+        {
+            string historyRecordstr = "";
+            todayTotalCount = 0;
+            var historyRecordsList = dataContext.GetRecords(DateTime.Today);
+            foreach (var a in historyRecordsList)
             {
-                c += a.duration;
-
                 var second = (int)(a.duration / 1000 % 60);
                 var minite = (int)(a.duration / (60 * 1000) % 60);
                 var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
-                abc += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
+                historyRecordstr += String.Concat($"{a.startDateTime.ToLongTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
                     ":", minite < 10 ? "0" + minite : minite + "",
                     ":", second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
-                count += a.count;
+                todayTotalCount += a.count;
             }
-            label3.Text = abc;
-            label2.Text = count + "";
+
+            if (currentRecord.duration > 0)
+            {
+                var second = (int)(currentRecord.duration / 1000 % 60);
+                var minite = (int)(currentRecord.duration / (60 * 1000) % 60);
+                var hour = (int)(currentRecord.duration / (60 * 60 * 1000) % 60);
+                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToLongTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
+                    ":", minite < 10 ? "0" + minite : minite + "",
+                    ":", second < 10 ? "0" + second : second + "", $"      {currentRecord.count}", "\n");
+                todayTotalCount += currentRecord.count;
+            }
+
+            labelTotalCount.Text = todayTotalCount + "";
+            label3.Text = historyRecordstr;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -74,51 +95,78 @@ namespace Buddha
             mci.Stop();
             if (isPlaying)
             {
-                duration += DateTime.Now.Subtract(start).TotalMilliseconds;
+                var dd = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
+                var cc = (int)(dd / (60 * 1000 * 10));
+                currentRecord.duration += (long)dd;
+                currentRecord.count += cc;
                 timer1.Stop();
-                mci.Stop();
             }
-            if (start.Year==DateTime.Now.Year)
+            if (currentRecord.startDateTime.Year == DateTime.Now.Year&&currentRecord.count>0)
             {
-                DataContext.AddRecord(new Record(start, (long)duration, (int)(duration / (60 * 1000 * 10)), "", 0));
-                DataContext.DisConnect();
+                currentRecord.dateStr = currentRecord.startDateTime.ToLongDateString() + "  " + currentRecord.startDateTime.ToLongTimeString();
+                dataContext.AddRecord(currentRecord);
             }
+            dataContext.DisConnect();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space)
+            switch (e.KeyCode)
             {
-                if (isPlaying == false)
-                {
-                    start = DateTime.Now;
-                    timer1.Start();
-                    mci.play();
-                    this.BackColor = Color.Black;
-                    isPlaying = true;
-                }
-                else
-                {
-                    //Date  now = new DateTime();
-                    duration += DateTime.Now.Subtract(start).TotalMilliseconds;
-                    timer1.Stop();
-                    mci.Pause();
-                    this.BackColor = Color.DimGray;
-                    isPlaying = false;
-                }
+                case Keys.Space:
+                    if (isPlaying == false)
+                    {
+                        currentStartTime = DateTime.Now;
+                        if (currentRecord.startDateTime.Year != DateTime.Now.Year)
+                        {
+                            currentRecord.startDateTime = currentStartTime;
+                        }
+                        timer1.Start();
+                        mci.play();
+                        this.BackColor = Color.Black;
+                        isPlaying = true;
+                    }
+                    else
+                    {
+                        currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
+                        timer1.Stop();
+                        mci.Pause();
+                        this.BackColor = Color.DarkKhaki;
+                        isPlaying = false;
+                    }
+                    break;
+                case Keys.Enter:
+                    var dd = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
+                    var cc = (int)(dd / (60 * 1000 * 10));
+                    if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
+                        return;
+                    var result = MessageBox.Show("保存记录？", "", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.No)
+                        return;
+
+                    currentRecord.count += cc;
+                    currentRecord.duration += (long)dd;
+
+                    this.labelTime.Text = "00 : 00 : 00";
+                    this.labelCount.Text = "0";
+                    currentStartTime = DateTime.Now;
+                    currentDuration = 0;
+
+                    loadHistoryRecords();
+                    break;
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var ccc = DateTime.Now.Subtract(start).TotalMilliseconds + duration;
+            var ccc = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
             var second = (int)(ccc / 1000 % 60);
             var minite = (int)(ccc / (60 * 1000) % 60);
             var hour = (int)(ccc / (60 * 60 * 1000) % 60);
-            this.label1.Text = String.Concat(hour < 10 ? "0" + hour : hour + "",
+            this.labelTime.Text = String.Concat(hour < 10 ? "0" + hour : hour + "",
                 " : ", minite < 10 ? "0" + minite : minite + "",
                 " : ", second < 10 ? "0" + second : second + "");
-            this.label2.Text = (int)(ccc / (60 * 1000 * 10) + count) + "";
+            this.labelCount.Text = (int)(ccc / (60 * 1000 * 10)) + "";
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)

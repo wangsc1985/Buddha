@@ -14,6 +14,11 @@ namespace Buddha
         public int count;
         public string summury;
         public int type;
+        public string dateStr;
+
+        public Record()
+        {
+        }
 
         public Record(DateTime startDateTime, long duration, int count ,string summury, int type)
         {
@@ -22,6 +27,7 @@ namespace Buddha
             this.count = count;
             this.summury = summury;
             this.type = type;
+            this.dateStr = startDateTime.ToLongDateString() + "  "+startDateTime.ToLongTimeString();
         }
     }
 }
