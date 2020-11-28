@@ -39,7 +39,6 @@
             this.labelTotalCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.labelClose = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -108,6 +107,7 @@
             this.labelWisdom.Size = new System.Drawing.Size(294, 64);
             this.labelWisdom.TabIndex = 1;
             this.labelWisdom.Text = "今生错过  万劫难复    大限到时  后悔晚矣";
+            this.labelWisdom.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // labelTotalCount
             // 
@@ -144,19 +144,6 @@
             this.label1.Size = new System.Drawing.Size(0, 12);
             this.label1.TabIndex = 2;
             // 
-            // labelClose
-            // 
-            this.labelClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelClose.AutoSize = true;
-            this.labelClose.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelClose.ForeColor = System.Drawing.Color.White;
-            this.labelClose.Location = new System.Drawing.Point(653, 341);
-            this.labelClose.Name = "labelClose";
-            this.labelClose.Size = new System.Drawing.Size(135, 33);
-            this.labelClose.TabIndex = 1;
-            this.labelClose.Text = "功课完毕";
-            this.labelClose.Click += new System.EventHandler(this.labelClose_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -175,7 +162,6 @@
             this.Controls.Add(this.labelCount);
             this.Controls.Add(this.labelWisdom);
             this.Controls.Add(this.labelTime);
-            this.Controls.Add(this.labelClose);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -203,7 +189,6 @@
         private System.Windows.Forms.Label labelTotalCount;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label labelClose;
         private System.Windows.Forms.Label label2;
     }
 }

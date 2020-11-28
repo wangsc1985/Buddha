@@ -125,7 +125,6 @@ namespace Buddha
                         timer1.Start();
                         mci.play();
                         //this.BackColor = Color.Black;
-                        this.labelClose.Visible = false;
                         isPlaying = true;
                     }
                     else
@@ -134,7 +133,6 @@ namespace Buddha
                         timer1.Stop();
                         mci.Pause();
                         //this.BackColor = Color.DarkRed;
-                        this.labelClose.Visible = true;
                         isPlaying = false;
                     }
                     break;
