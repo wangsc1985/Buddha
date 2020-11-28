@@ -124,7 +124,8 @@ namespace Buddha
                         }
                         timer1.Start();
                         mci.play();
-                        this.BackColor = Color.Black;
+                        //this.BackColor = Color.Black;
+                        this.labelClose.Visible = false;
                         isPlaying = true;
                     }
                     else
@@ -132,7 +133,8 @@ namespace Buddha
                         currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                         timer1.Stop();
                         mci.Pause();
-                        this.BackColor = Color.DarkRed;
+                        //this.BackColor = Color.DarkRed;
+                        this.labelClose.Visible = true;
                         isPlaying = false;
                     }
                     break;
@@ -176,10 +178,11 @@ namespace Buddha
             {
                 this.WindowState = FormWindowState.Minimized;
             }
-            else
-            {
-                this.Close();
-            }
+        }
+
+        private void labelClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 
