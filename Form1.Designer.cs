@@ -196,6 +196,7 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(295, 393);
             this.flowLayoutPanel2.TabIndex = 3;
+            this.flowLayoutPanel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // label01
             // 
