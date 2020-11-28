@@ -34,7 +34,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelTime = new System.Windows.Forms.Label();
             this.labelCount = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelHistoryRecords = new System.Windows.Forms.Label();
             this.labelWisdom = new System.Windows.Forms.Label();
             this.labelTotalCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -86,15 +86,15 @@
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 33);
-            this.label3.TabIndex = 1;
-            this.label3.Text = " ";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelHistoryRecords.AutoSize = true;
+            this.labelHistoryRecords.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelHistoryRecords.ForeColor = System.Drawing.Color.White;
+            this.labelHistoryRecords.Location = new System.Drawing.Point(3, 0);
+            this.labelHistoryRecords.Name = "label3";
+            this.labelHistoryRecords.Size = new System.Drawing.Size(23, 33);
+            this.labelHistoryRecords.TabIndex = 1;
+            this.labelHistoryRecords.Text = " ";
+            this.labelHistoryRecords.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelWisdom
             // 
@@ -125,7 +125,7 @@
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.label3);
+            this.flowLayoutPanel1.Controls.Add(this.labelHistoryRecords);
             this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.labelTotalCount);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -174,7 +174,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.Label labelCount;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelHistoryRecords;
         private System.Windows.Forms.Label labelWisdom;
         private System.Windows.Forms.Label labelTotalCount;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

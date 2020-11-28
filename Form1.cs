@@ -87,8 +87,8 @@ namespace Buddha
             }
 
             
-            labelTotalCount.Text = $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}";
-            label3.Text = historyRecordstr;
+            labelTotalCount.Text = todayTotalCount>0?$"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}":"";
+            labelHistoryRecords.Text = historyRecordstr;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
