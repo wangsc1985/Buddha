@@ -107,6 +107,7 @@
             this.labelHistoryRecords.TabIndex = 1;
             this.labelHistoryRecords.Text = " ";
             this.labelHistoryRecords.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelHistoryRecords.Click += new System.EventHandler(this.labelHistoryRecords_Click);
             // 
             // labelWisdom
             // 
@@ -175,7 +176,7 @@
             this.label05.Name = "label05";
             this.label05.Size = new System.Drawing.Size(287, 32);
             this.label05.TabIndex = 1;
-            this.label05.Text = "外境恶缘  皆由因果";
+            this.label05.Text = "外境诸缘  皆有因果";
             this.label05.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // flowLayoutPanel2
@@ -273,7 +274,7 @@
             this.label07.Name = "label07";
             this.label07.Size = new System.Drawing.Size(287, 32);
             this.label07.TabIndex = 1;
-            this.label07.Text = "心当放下  老实念佛";
+            this.label07.Text = "看破放下  一心念佛";
             this.label07.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label08
@@ -287,7 +288,7 @@
             this.label08.Name = "label08";
             this.label08.Size = new System.Drawing.Size(287, 32);
             this.label08.TabIndex = 1;
-            this.label08.Text = "佛力护持  逆境自消";
+            this.label08.Text = "既消恶缘  又助往生";
             this.label08.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label10

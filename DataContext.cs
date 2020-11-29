@@ -28,7 +28,7 @@ namespace Buddha
             CreateTable();
         }
 
-        public void DisConnect()
+        public void Close()
         {
             dbConnection.Close();
         }
@@ -77,7 +77,7 @@ namespace Buddha
             DateTime start = date;
             var end = start.AddDays(1);
             List<Record> result = new List<Record>();
-            string sql = $"select * from Record where startDateTime > {Utils.ConvertDateTimeToLong(start)} AND startDateTime < {Utils.ConvertDateTimeToLong(end)}";
+            string sql = $"select * from Record where startDateTime > {Utils.ConvertDateTimeToLong(start)} AND startDateTime < {Utils.ConvertDateTimeToLong(end)} order by startDateTime";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())

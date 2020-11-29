@@ -107,7 +107,7 @@ namespace Buddha
                 currentRecord.dateStr = currentRecord.startDateTime.ToLongDateString() + "  " + currentRecord.startDateTime.ToLongTimeString();
                 dataContext.AddRecord(currentRecord);
             }
-            dataContext.DisConnect();
+            dataContext.Close();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -181,6 +181,14 @@ namespace Buddha
         private void labelClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void labelHistoryRecords_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
+
+            loadHistoryRecords();
         }
     }
 
