@@ -32,24 +32,34 @@ namespace Buddha
         public Form1()
         {
             InitializeComponent();
+            //Fullscreen();
+            PauseScreen();
+            dataContext.Connect();
+        }
 
+        private void Fullscreen()
+        {
+            this.WindowState = FormWindowState.Normal;
             screenWidth = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
             screenHeight = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
-            // 设置全屏   
-            this.FormBorderStyle = FormBorderStyle.None;     //设置窗体为无边框样式
-            this.WindowState = FormWindowState.Maximized;    //最大化窗体
-            this.Left = 0;
-            this.Top = 0;
             this.Width = screenWidth;
             this.Height = screenHeight;
+            this.Left = 0;
+            this.Top = 0;
+            this.FormBorderStyle = FormBorderStyle.None;     //设置窗体为无边框样式
+            this.WindowState = FormWindowState.Maximized;    //最大化窗体
+            this.TopMost = true;
+        }
 
-
-            dataContext.Connect();
+        private void PauseScreen()
+        {
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            //this.WindowState = FormWindowState.Minimized;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,8 +96,8 @@ namespace Buddha
                 todayTotalCount += currentRecord.count;
             }
 
-            
-            labelTotalCount.Text = todayTotalCount>0?$"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}":"";
+
+            labelTotalCount.Text = todayTotalCount > 0 ? $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
             labelHistoryRecords.Text = historyRecordstr;
         }
 
@@ -102,7 +112,7 @@ namespace Buddha
                 currentRecord.count += cc;
                 timer1.Stop();
             }
-            if (currentRecord.startDateTime.Year == DateTime.Now.Year&&currentRecord.count>0)
+            if (currentRecord.startDateTime.Year == DateTime.Now.Year && currentRecord.count > 0)
             {
                 currentRecord.dateStr = currentRecord.startDateTime.ToLongDateString() + "  " + currentRecord.startDateTime.ToLongTimeString();
                 dataContext.AddRecord(currentRecord);
@@ -114,9 +124,19 @@ namespace Buddha
         {
             switch (e.KeyCode)
             {
+                case Keys.Escape:
+                    this.WindowState = FormWindowState.Minimized;
+                    break;
+                case Keys.Delete:
+                    currentStartTime = DateTime.Now;
+                    currentDuration = 0;
+                    break;
                 case Keys.Space:
                     if (isPlaying == false)
                     {
+                        /**
+                         * 开始念佛
+                         **/
                         currentStartTime = DateTime.Now;
                         if (currentRecord.startDateTime.Year != DateTime.Now.Year)
                         {
@@ -126,24 +146,32 @@ namespace Buddha
                         mci.play();
                         //this.BackColor = Color.Black;
                         isPlaying = true;
+                        Fullscreen();
                     }
                     else
                     {
+                        /**
+                         * 暂停念佛
+                         **/
                         currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                         timer1.Stop();
                         mci.Pause();
                         //this.BackColor = Color.DarkRed;
                         isPlaying = false;
+                        PauseScreen();
                     }
                     break;
                 case Keys.Enter:
-                    var dd = isPlaying? DateTime.Now.Subtract(currentStartTime).TotalMilliseconds:0 + currentDuration;
+                    var dd = isPlaying ? DateTime.Now.Subtract(currentStartTime).TotalMilliseconds : 0 + currentDuration;
                     var cc = (int)(dd / (60 * 1000 * 10));
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
-                    var result = MessageBox.Show("保存记录？", "", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.No)
-                        return;
+                    if (dd > 600000 * cc + 3 * 60000 * cc)
+                    {
+                        var result = MessageBox.Show("保存记录？", "", MessageBoxButtons.YesNo);
+                        if (result == DialogResult.No)
+                            return;
+                    }
 
                     currentRecord.count += cc;
                     currentRecord.duration += (long)dd;
@@ -172,15 +200,15 @@ namespace Buddha
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    this.WindowState = FormWindowState.Minimized;
+            //}
         }
 
         private void labelClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            //this.Close();
         }
 
         private void labelHistoryRecords_Click(object sender, EventArgs e)

@@ -222,7 +222,7 @@
             this.label002.Name = "label002";
             this.label002.Size = new System.Drawing.Size(287, 32);
             this.label002.TabIndex = 1;
-            this.label002.Text = "倘若放逸  懒散懈怠";
+            this.label002.Text = "不思难逢  放逸懈怠";
             this.label002.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label02
