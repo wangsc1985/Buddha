@@ -50,6 +50,7 @@
             this.label07 = new System.Windows.Forms.Label();
             this.label08 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.labelIndex = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -193,6 +194,7 @@
             this.flowLayoutPanel2.Controls.Add(this.label07);
             this.flowLayoutPanel2.Controls.Add(this.label08);
             this.flowLayoutPanel2.Controls.Add(this.label10);
+            this.flowLayoutPanel2.Controls.Add(this.labelIndex);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(711, 12);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(295, 393);
@@ -204,7 +206,7 @@
             this.label01.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label01.AutoSize = true;
             this.label01.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label01.ForeColor = System.Drawing.Color.Red;
+            this.label01.ForeColor = System.Drawing.Color.White;
             this.label01.Location = new System.Drawing.Point(3, 32);
             this.label01.Name = "label01";
             this.label01.Size = new System.Drawing.Size(287, 32);
@@ -293,13 +295,22 @@
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label10.Location = new System.Drawing.Point(3, 291);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(123, 35);
+            this.label10.Size = new System.Drawing.Size(280, 35);
             this.label10.TabIndex = 2;
             this.label10.Text = "label4";
+            // 
+            // labelIndex
+            // 
+            this.labelIndex.AutoSize = true;
+            this.labelIndex.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelIndex.ForeColor = System.Drawing.Color.White;
+            this.labelIndex.Location = new System.Drawing.Point(289, 291);
+            this.labelIndex.Name = "labelIndex";
+            this.labelIndex.Size = new System.Drawing.Size(0, 33);
+            this.labelIndex.TabIndex = 2;
             // 
             // Form1
             // 
@@ -351,6 +362,7 @@
         private System.Windows.Forms.Label label01;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label002;
+        private System.Windows.Forms.Label labelIndex;
     }
 }
 

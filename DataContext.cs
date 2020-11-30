@@ -36,9 +36,38 @@ namespace Buddha
         #region 住户操作
         public void CreateTable()
         {
-            string sql = "create table if not exists Record (startDateTime LONG, duration LONG,count INT ,summury CHAR, type INT,dateStr CHAR)";
+            string sql = "create table if not exists Record (startDateTime LONG, duration LONG,count INT ,summury CHAR, type INT,dateStr CHAR); ";
+            sql += "create table if not exists Setting (key CHAR, value CHAR)";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
+        }
+        public void EditSetting(string key,string value)
+        {
+            if (getSettingValue(key) == null)
+            {
+                string sql = $"insert into Setting (key,value) " +
+                    $"values ('{key}','{value}')";
+                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                command.ExecuteNonQuery();
+            }
+            else
+            {
+                string sql = $"update Setting set " +
+                    $"value = '{value}'" +
+                $"where key= '{key}'";
+                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                command.ExecuteNonQuery();
+            }
+        }
+        public string getSettingValue(string key) 
+        {
+            Setting result = new Setting();
+            string sql = $"select * from Setting where key = '{key}'";
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                return reader["value"].ToString();
+            return null;
         }
         public void AddRecord(Record model)
         {

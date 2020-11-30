@@ -20,7 +20,7 @@ namespace Buddha
         int screenHeight = 0;
         bool isPlaying = false;
 
-        clsMCI mci = new clsMCI();
+        clsMediaPlayer mediaPlayer = new clsMediaPlayer();
         int todayTotalCount = 0;
         double currentDuration = 0;
         DateTime currentStartTime;
@@ -62,11 +62,62 @@ namespace Buddha
             //this.WindowState = FormWindowState.Minimized;
         }
 
+        private int fileIndex = 3;
         private void Form1_Load(object sender, EventArgs e)
         {
-            mci.FileName = $"{exePath}\\1.mp3";
+            var val = dataContext.getSettingValue("fileIndex");
+            if(val != null)
+            {
+                fileIndex =int.Parse( val);
+            }
+            mediaPlayer.FileName = $"{exePath}\\{fileIndex}.mp3";
+            labelIndex.Text = "速度："+fileIndex;
             labelCount.Text = "0";
             loadHistoryRecords();
+        }
+
+        private string dizhi(int hour)
+        {
+            switch (hour)
+            {
+                case 23:
+                case 0:
+                    return "子";
+                case 1:
+                case 2:
+                    return "丑";
+                case 3:
+                case 4:
+                    return "寅";
+                case 5:
+                case 6:
+                    return "卯";
+                case 7:
+                case 8:
+                    return "辰";
+                case 9:
+                case 10:
+                    return "巳";
+                case 11:
+                case 12:
+                    return "午";
+                case 13:
+                case 14:
+                    return "未";
+                case 15:
+                case 16:
+                    return "申";
+                case 17:
+                case 18:
+                    return "酉";
+                case 19:
+                case 20:
+                    return "戌";
+                case 21:
+                case 22:
+                    return "亥";
+                default: return "";
+            }
         }
 
         private void loadHistoryRecords()
@@ -79,7 +130,7 @@ namespace Buddha
                 var second = (int)(a.duration / 1000 % 60);
                 var minite = (int)(a.duration / (60 * 1000) % 60);
                 var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "", ":",
+                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}  {dizhi(a.startDateTime.Hour)}      ", hour < 10 ? "0" + hour : hour + "", ":",
                     minite < 10 ? "0" + minite : minite + "", ":",
                     second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
                 todayTotalCount += a.count;
@@ -90,7 +141,7 @@ namespace Buddha
                 var second = (int)(currentRecord.duration / 1000 % 60);
                 var minite = (int)(currentRecord.duration / (60 * 1000) % 60);
                 var hour = (int)(currentRecord.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "",
+                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToShortTimeString()}  {dizhi(currentRecord.startDateTime.Hour)}      ", hour < 10 ? "0" + hour : hour + "",
                     ":", minite < 10 ? "0" + minite : minite + "",
                     ":", second < 10 ? "0" + second : second + "", $"      {currentRecord.count}", "\n");
                 todayTotalCount += currentRecord.count;
@@ -103,7 +154,7 @@ namespace Buddha
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            mci.Stop();
+            mediaPlayer.Stop();
             if (isPlaying)
             {
                 var dd = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
@@ -124,6 +175,31 @@ namespace Buddha
         {
             switch (e.KeyCode)
             {
+                case Keys.Tab:
+                    flowLayoutPanel2.Visible = !flowLayoutPanel2.Visible;
+                    break;
+                case Keys.Up:
+                    if (fileIndex < 3)
+                    {
+                        mediaPlayer.Stop();
+                        mediaPlayer = new clsMediaPlayer();
+                        mediaPlayer.FileName = $"{exePath}\\{++fileIndex}.mp3";
+                        mediaPlayer.play();
+                        labelIndex.Text = "速度：" + fileIndex;
+                        dataContext.EditSetting("fileIndex", fileIndex+"");
+                    }
+                    break;
+                case Keys.Down:
+                    if (fileIndex > 1)
+                    {
+                        mediaPlayer.Stop();
+                        mediaPlayer = new clsMediaPlayer();
+                        mediaPlayer.FileName = $"{exePath}\\{--fileIndex}.mp3";
+                        mediaPlayer.play();
+                        labelIndex.Text = "速度：" + fileIndex;
+                        dataContext.EditSetting("fileIndex", fileIndex + "");
+                    }
+                    break;
                 case Keys.Escape:
                     this.WindowState = FormWindowState.Minimized;
                     break;
@@ -143,7 +219,7 @@ namespace Buddha
                             currentRecord.startDateTime = currentStartTime;
                         }
                         timer1.Start();
-                        mci.play();
+                        mediaPlayer.play();
                         //this.BackColor = Color.Black;
                         isPlaying = true;
                         Fullscreen();
@@ -155,7 +231,7 @@ namespace Buddha
                          **/
                         currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                         timer1.Stop();
-                        mci.Pause();
+                        mediaPlayer.Pause();
                         //this.BackColor = Color.DarkRed;
                         isPlaying = false;
                         PauseScreen();
@@ -223,9 +299,9 @@ namespace Buddha
     /// <summary>
     /// clsMci 的摘要说明。
     /// </summary>
-    public class clsMCI
+    public class clsMediaPlayer
     {
-        public clsMCI()
+        public clsMediaPlayer()
         {
         }
         //定义API函数使用的字符串变量 
@@ -244,7 +320,7 @@ namespace Buddha
             mStop = 3
         };
         //结构变量
-        public struct structMCI
+        public struct structMediaPlayer
         {
             public bool bMut;
             public int iDur;
@@ -254,13 +330,13 @@ namespace Buddha
             public string iName;
             public State state;
         };
-        public structMCI mc = new structMCI();
+        public structMediaPlayer mediaPlayer = new structMediaPlayer();
         //取得播放文件属性
         public string FileName
         {
             get
             {
-                return mc.iName;
+                return mediaPlayer.iName;
             }
             set
             {
@@ -269,17 +345,18 @@ namespace Buddha
                     TemStr = "";
                     TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
                     Name = Name.PadLeft(260, Convert.ToChar(" "));
-                    mc.iName = value;
-                    ilong = APIClass.GetShortPathName(mc.iName, Name, Name.Length);
+                    mediaPlayer.iName = value;
+                    ilong = APIClass.GetShortPathName(mediaPlayer.iName, Name, Name.Length);
                     Name = GetCurrPath(Name);
                     Name = "open " + Convert.ToChar(34) + Name + Convert.ToChar(34) + " alias media";
                     ilong = APIClass.mciSendString("close all", TemStr, TemStr.Length, 0);
                     ilong = APIClass.mciSendString(Name, TemStr, TemStr.Length, 0);
                     ilong = APIClass.mciSendString("set media time format milliseconds", TemStr, TemStr.Length, 0);
-                    mc.state = State.mStop;
+                    mediaPlayer.state = State.mStop;
                 }
-                catch
+                catch(Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -289,7 +366,7 @@ namespace Buddha
             TemStr = "";
             TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
             APIClass.mciSendString("play media", TemStr, TemStr.Length, 0);
-            mc.state = State.mPlaying;
+            mediaPlayer.state = State.mPlaying;
         }
         //停止
         public void Stop()
@@ -298,14 +375,14 @@ namespace Buddha
             TemStr = TemStr.PadLeft(128, Convert.ToChar(" "));
             ilong = APIClass.mciSendString("close media", TemStr, 128, 0);
             ilong = APIClass.mciSendString("close all", TemStr, 128, 0);
-            mc.state = State.mStop;
+            mediaPlayer.state = State.mStop;
         }
         public void Pause()
         {
             TemStr = "";
             TemStr = TemStr.PadLeft(128, Convert.ToChar(" "));
             ilong = APIClass.mciSendString("pause media", TemStr, TemStr.Length, 0);
-            mc.state = State.mPuase;
+            mediaPlayer.state = State.mPuase;
         }
         private string GetCurrPath(string name)
         {
@@ -335,8 +412,8 @@ namespace Buddha
                 durLength = "";
                 durLength = durLength.PadLeft(128, Convert.ToChar(" "));
                 APIClass.mciSendString("status media position", durLength, durLength.Length, 0);
-                mc.iPos = (int)(Convert.ToDouble(durLength) / 1000f);
-                return mc.iPos;
+                mediaPlayer.iPos = (int)(Convert.ToDouble(durLength) / 1000f);
+                return mediaPlayer.iPos;
             }
         }
     }
