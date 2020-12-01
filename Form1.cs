@@ -229,6 +229,7 @@ namespace Buddha
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
 
+                    dataContext.AddRecord(new Record(currentStartTime, (long)dd, cc, "", 0));
                     this.labelTime.ForeColor = Color.White;
                     this.labelCount.ForeColor = Color.White;
                     this.labelTime.Text = "00 : 00 : 00";
@@ -236,7 +237,6 @@ namespace Buddha
                     currentStartTime = DateTime.Now;
                     currentDuration = 0;
 
-                    dataContext.AddRecord(new Record(currentStartTime, (long)dd, cc, "", 0));
                     loadHistoryRecords();
                     break;
             }
