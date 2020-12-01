@@ -244,16 +244,17 @@ namespace Buddha
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var ccc = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
-            var second = (int)(ccc / 1000 % 60);
-            var minite = (int)(ccc / (60 * 1000) % 60);
-            var hour = (int)(ccc / (60 * 60 * 1000) % 60);
+            var duration = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
+            var count = (int)(duration / (60 * 1000 * 10));
+            var second = (int)(duration / 1000 % 60);
+            var minite = (int)(duration / (60 * 1000) % 60);
+            var hour = (int)(duration / (60 * 60 * 1000) % 60);
             this.labelTime.Text = String.Concat(hour < 10 ? "0" + hour : hour + "",
                 " : ", minite < 10 ? "0" + minite : minite + "",
                 " : ", second < 10 ? "0" + second : second + "");
-            this.labelCount.Text = (int)(ccc / (60 * 1000 * 10)) + "";
+            this.labelCount.Text = count + "";
             labelSC.Text = dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
-            if (ccc > 0)
+            if (count > 0)
             {
                 this.labelTime.ForeColor = Color.Red;
                 this.labelCount.ForeColor = Color.Red;
