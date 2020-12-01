@@ -20,14 +20,13 @@ namespace Buddha
         int screenHeight = 0;
         bool isPlaying = false;
 
-        clsMediaPlayer mediaPlayer = new clsMediaPlayer();
+        MediaPlayer mediaPlayer = new MediaPlayer();
         int todayTotalCount = 0;
         double currentDuration = 0;
         DateTime currentStartTime;
 
         DataContext dataContext = new DataContext();
         // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
-        Record currentRecord = new Record();
 
         public Form1()
         {
@@ -66,90 +65,86 @@ namespace Buddha
         private void Form1_Load(object sender, EventArgs e)
         {
             var val = dataContext.getSettingValue("fileIndex");
-            if(val != null)
+            if (val != null)
             {
-                fileIndex =int.Parse( val);
+                fileIndex = int.Parse(val);
             }
             mediaPlayer.FileName = $"{exePath}\\{fileIndex}.mp3";
-            labelIndex.Text = "速度："+fileIndex;
+            labelIndex.Text = "速度：" + fileIndex;
             labelCount.Text = "0";
+            int hour = DateTime.Now.Hour;
+            labelSC.Text = dizhi[DizhiIndex(hour)] + "时";
             loadHistoryRecords();
         }
 
-        private string dizhi(int hour)
+        private int DizhiIndex(int hour)
         {
-            switch (hour)
-            {
-                case 23:
-                case 0:
-                    return "子";
-                case 1:
-                case 2:
-                    return "丑";
-                case 3:
-                case 4:
-                    return "寅";
-                case 5:
-                case 6:
-                    return "卯";
-                case 7:
-                case 8:
-                    return "辰";
-                case 9:
-                case 10:
-                    return "巳";
-                case 11:
-                case 12:
-                    return "午";
-                case 13:
-                case 14:
-                    return "未";
-                case 15:
-                case 16:
-                    return "申";
-                case 17:
-                case 18:
-                    return "酉";
-                case 19:
-                case 20:
-                    return "戌";
-                case 21:
-                case 22:
-                    return "亥";
-                default: return "";
-            }
+            return (hour + 1) / 2;
         }
-
-        private void loadHistoryRecords()
+        string[] dizhi = new string[] { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子" };
+        private void loadHistoryRecords(DateTime date)
         {
             string historyRecordstr = "";
             todayTotalCount = 0;
-            var historyRecordsList = dataContext.GetRecords(DateTime.Today);
-            foreach (var a in historyRecordsList)
+            var historyRecordsList = dataContext.GetRecords(date);
+            var preDZindex = -1;
+            DateTime startTime = DateTime.Today;
+            long duration = 0;
+            int count = 0;
+            foreach (var record in historyRecordsList)
             {
-                var second = (int)(a.duration / 1000 % 60);
-                var minite = (int)(a.duration / (60 * 1000) % 60);
-                var hour = (int)(a.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{a.startDateTime.ToShortTimeString()}  {dizhi(a.startDateTime.Hour)}      ", hour < 10 ? "0" + hour : hour + "", ":",
+                var currDZindex = DizhiIndex(record.startDateTime.Hour);
+
+                // 如果当前记录和上一个记录在一个时辰内，则只累加不显示。
+                if (currDZindex == preDZindex)
+                {
+                    duration += record.duration;
+                    count += record.count;
+                }
+                else
+                {
+                    // 如果是第一条记录，就只记录不打印
+                    if (duration > 0)
+                    {
+                        var second = (int)(duration / 1000 % 60);
+                        var minite = (int)(duration / (60 * 1000) % 60);
+                        var hour = (int)(duration / (60 * 60 * 1000) % 60);
+                        // 当前记录已经是新时辰，将上一个时辰的数据打印出来。
+                        historyRecordstr += String.Concat($"{dizhi[DizhiIndex(startTime.Hour)]}     {(startTime.Hour < 10 ? "0" : "")}{startTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "", ":",
+                            minite < 10 ? "0" + minite : minite + "", ":",
+                            second < 10 ? "0" + second : second + "", $"      {count}", "\n");
+                        todayTotalCount += count;
+                        // 因为上面显示的是上一个时辰的数据，所以补加时辰应该在上一个时辰数据之后补加。
+                        for ( int i = preDZindex + 1; i < currDZindex; i++)
+                        {
+                            historyRecordstr += dizhi[i] + "                                          \n";
+                        }
+                    }
+                    startTime = record.startDateTime;
+                    duration = record.duration;
+                    count = record.count;
+                    preDZindex = currDZindex;
+                }
+            }
+
+            // 将最后一条数据打印出来
+            if (count > 0)
+            {
+                var second = (int)(duration / 1000 % 60);
+                var minite = (int)(duration / (60 * 1000) % 60);
+                var hour = (int)(duration / (60 * 60 * 1000) % 60);
+                historyRecordstr += String.Concat($"{dizhi[DizhiIndex(startTime.Hour)]}     {(startTime.Hour < 10 ? "0" : "")}{startTime.ToShortTimeString()}      ", hour < 10 ? "0" + hour : hour + "", ":",
                     minite < 10 ? "0" + minite : minite + "", ":",
-                    second < 10 ? "0" + second : second + "", $"      {a.count}", "\n");
-                todayTotalCount += a.count;
+                    second < 10 ? "0" + second : second + "", $"      {count}", "\n");
+                todayTotalCount += count;
             }
-
-            if (currentRecord.duration > 0)
-            {
-                var second = (int)(currentRecord.duration / 1000 % 60);
-                var minite = (int)(currentRecord.duration / (60 * 1000) % 60);
-                var hour = (int)(currentRecord.duration / (60 * 60 * 1000) % 60);
-                historyRecordstr += String.Concat($"{currentRecord.startDateTime.ToShortTimeString()}  {dizhi(currentRecord.startDateTime.Hour)}      ", hour < 10 ? "0" + hour : hour + "",
-                    ":", minite < 10 ? "0" + minite : minite + "",
-                    ":", second < 10 ? "0" + second : second + "", $"      {currentRecord.count}", "\n");
-                todayTotalCount += currentRecord.count;
-            }
-
 
             labelTotalCount.Text = todayTotalCount > 0 ? $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
             labelHistoryRecords.Text = historyRecordstr;
+        }
+        private void loadHistoryRecords()
+        {
+            loadHistoryRecords(DateTime.Today);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -157,16 +152,13 @@ namespace Buddha
             mediaPlayer.Stop();
             if (isPlaying)
             {
-                var dd = DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration;
-                var cc = (int)(dd / (60 * 1000 * 10));
-                currentRecord.duration += (long)dd;
-                currentRecord.count += cc;
+                currentDuration += DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                 timer1.Stop();
             }
-            if (currentRecord.startDateTime.Year == DateTime.Now.Year && currentRecord.count > 0)
+            var cc = (int)(currentDuration / (60 * 1000 * 10));
+            if (cc > 0)
             {
-                currentRecord.dateStr = currentRecord.startDateTime.ToLongDateString() + "  " + currentRecord.startDateTime.ToLongTimeString();
-                dataContext.AddRecord(currentRecord);
+                dataContext.AddRecord(new Record(currentStartTime, (long)currentDuration, cc, "", 0));
             }
             dataContext.Close();
         }
@@ -182,18 +174,18 @@ namespace Buddha
                     if (fileIndex < 3)
                     {
                         mediaPlayer.Stop();
-                        mediaPlayer = new clsMediaPlayer();
+                        mediaPlayer = new MediaPlayer();
                         mediaPlayer.FileName = $"{exePath}\\{++fileIndex}.mp3";
                         mediaPlayer.play();
                         labelIndex.Text = "速度：" + fileIndex;
-                        dataContext.EditSetting("fileIndex", fileIndex+"");
+                        dataContext.EditSetting("fileIndex", fileIndex + "");
                     }
                     break;
                 case Keys.Down:
                     if (fileIndex > 1)
                     {
                         mediaPlayer.Stop();
-                        mediaPlayer = new clsMediaPlayer();
+                        mediaPlayer = new MediaPlayer();
                         mediaPlayer.FileName = $"{exePath}\\{--fileIndex}.mp3";
                         mediaPlayer.play();
                         labelIndex.Text = "速度：" + fileIndex;
@@ -211,16 +203,11 @@ namespace Buddha
                     if (isPlaying == false)
                     {
                         /**
-                         * 开始念佛
+                         * 开始念佛 / 重新开始念佛
                          **/
                         currentStartTime = DateTime.Now;
-                        if (currentRecord.startDateTime.Year != DateTime.Now.Year)
-                        {
-                            currentRecord.startDateTime = currentStartTime;
-                        }
                         timer1.Start();
                         mediaPlayer.play();
-                        //this.BackColor = Color.Black;
                         isPlaying = true;
                         Fullscreen();
                     }
@@ -232,7 +219,6 @@ namespace Buddha
                         currentDuration += (long)DateTime.Now.Subtract(currentStartTime).TotalMilliseconds;
                         timer1.Stop();
                         mediaPlayer.Pause();
-                        //this.BackColor = Color.DarkRed;
                         isPlaying = false;
                         PauseScreen();
                     }
@@ -242,21 +228,15 @@ namespace Buddha
                     var cc = (int)(dd / (60 * 1000 * 10));
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
-                    if (dd > 600000 * cc + 3 * 60000 * cc)
-                    {
-                        var result = MessageBox.Show("保存记录？", "", MessageBoxButtons.YesNo);
-                        if (result == DialogResult.No)
-                            return;
-                    }
 
-                    currentRecord.count += cc;
-                    currentRecord.duration += (long)dd;
-
+                    this.labelTime.ForeColor = Color.White;
+                    this.labelCount.ForeColor = Color.White;
                     this.labelTime.Text = "00 : 00 : 00";
                     this.labelCount.Text = "0";
                     currentStartTime = DateTime.Now;
                     currentDuration = 0;
 
+                    dataContext.AddRecord(new Record(currentStartTime, (long)dd, cc, "", 0));
                     loadHistoryRecords();
                     break;
             }
@@ -272,14 +252,21 @@ namespace Buddha
                 " : ", minite < 10 ? "0" + minite : minite + "",
                 " : ", second < 10 ? "0" + second : second + "");
             this.labelCount.Text = (int)(ccc / (60 * 1000 * 10)) + "";
+            labelSC.Text = dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+            if (ccc > 0)
+            {
+                this.labelTime.ForeColor = Color.Red;
+                this.labelCount.ForeColor = Color.Red;
+            }
+            else
+            {
+                this.labelTime.ForeColor = Color.White;
+                this.labelCount.ForeColor = Color.White;
+            }
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    this.WindowState = FormWindowState.Minimized;
-            //}
         }
 
         private void labelClose_Click(object sender, EventArgs e)
@@ -289,148 +276,27 @@ namespace Buddha
 
         private void labelHistoryRecords_Click(object sender, EventArgs e)
         {
+        }
+
+        private void labelHistoryRecords_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
             Form2 form2 = new Form2();
             form2.ShowDialog();
+            if (form2.DialogResult == DialogResult.Yes)
+                loadHistoryRecords(form2.datetime.AddHours(-1 * form2.datetime.Hour).AddMinutes(-1 * form2.datetime.Minute));
+            else
+                loadHistoryRecords();
+        }
 
-            loadHistoryRecords();
+        private void flowLayoutPanel1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
+            if (form2.DialogResult == DialogResult.Yes)
+                loadHistoryRecords(form2.datetime.AddHours(-1 * form2.datetime.Hour).AddMinutes(-1 * form2.datetime.Minute));
+            else
+                loadHistoryRecords();
         }
     }
 
-    /// <summary>
-    /// clsMci 的摘要说明。
-    /// </summary>
-    public class clsMediaPlayer
-    {
-        public clsMediaPlayer()
-        {
-        }
-        //定义API函数使用的字符串变量 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        private string Name = "";
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        private string durLength = "";
-        [MarshalAs(UnmanagedType.LPTStr, SizeConst = 128)]
-        private string TemStr = "";
-        int ilong;
-        //定义播放状态枚举变量
-        public enum State
-        {
-            mPlaying = 1,
-            mPuase = 2,
-            mStop = 3
-        };
-        //结构变量
-        public struct structMediaPlayer
-        {
-            public bool bMut;
-            public int iDur;
-            public int iPos;
-            public int iVol;
-            public int iBal;
-            public string iName;
-            public State state;
-        };
-        public structMediaPlayer mediaPlayer = new structMediaPlayer();
-        //取得播放文件属性
-        public string FileName
-        {
-            get
-            {
-                return mediaPlayer.iName;
-            }
-            set
-            {
-                try
-                {
-                    TemStr = "";
-                    TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
-                    Name = Name.PadLeft(260, Convert.ToChar(" "));
-                    mediaPlayer.iName = value;
-                    ilong = APIClass.GetShortPathName(mediaPlayer.iName, Name, Name.Length);
-                    Name = GetCurrPath(Name);
-                    Name = "open " + Convert.ToChar(34) + Name + Convert.ToChar(34) + " alias media";
-                    ilong = APIClass.mciSendString("close all", TemStr, TemStr.Length, 0);
-                    ilong = APIClass.mciSendString(Name, TemStr, TemStr.Length, 0);
-                    ilong = APIClass.mciSendString("set media time format milliseconds", TemStr, TemStr.Length, 0);
-                    mediaPlayer.state = State.mStop;
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-        //播放
-        public void play()
-        {
-            TemStr = "";
-            TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
-            APIClass.mciSendString("play media", TemStr, TemStr.Length, 0);
-            mediaPlayer.state = State.mPlaying;
-        }
-        //停止
-        public void Stop()
-        {
-            TemStr = "";
-            TemStr = TemStr.PadLeft(128, Convert.ToChar(" "));
-            ilong = APIClass.mciSendString("close media", TemStr, 128, 0);
-            ilong = APIClass.mciSendString("close all", TemStr, 128, 0);
-            mediaPlayer.state = State.mStop;
-        }
-        public void Pause()
-        {
-            TemStr = "";
-            TemStr = TemStr.PadLeft(128, Convert.ToChar(" "));
-            ilong = APIClass.mciSendString("pause media", TemStr, TemStr.Length, 0);
-            mediaPlayer.state = State.mPuase;
-        }
-        private string GetCurrPath(string name)
-        {
-            if (name.Length < 1) return "";
-            name = name.Trim();
-            name = name.Substring(0, name.Length - 1);
-            return name;
-        }
-        //总时间
-        public int Duration
-        {
-            get
-            {
-                durLength = "";
-                durLength = durLength.PadLeft(128, Convert.ToChar(" "));
-                APIClass.mciSendString("status media length", durLength, durLength.Length, 0);
-                durLength = durLength.Trim();
-                if (durLength == "") return 0;
-                return (int)(Convert.ToDouble(durLength) / 1000f);
-            }
-        }
-        //当前时间
-        public int CurrentPosition
-        {
-            get
-            {
-                durLength = "";
-                durLength = durLength.PadLeft(128, Convert.ToChar(" "));
-                APIClass.mciSendString("status media position", durLength, durLength.Length, 0);
-                mediaPlayer.iPos = (int)(Convert.ToDouble(durLength) / 1000f);
-                return mediaPlayer.iPos;
-            }
-        }
-    }
-    public class APIClass
-    {
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern int GetShortPathName(
-         string lpszLongPath,
-         string shortFile,
-         int cchBuffer
-      );
-        [DllImport("winmm.dll", EntryPoint = "mciSendString", CharSet = CharSet.Auto)]
-        public static extern int mciSendString(
-           string lpstrCommand,
-           string lpstrReturnString,
-           int uReturnLength,
-           int hwndCallback
-          );
-    }
 }

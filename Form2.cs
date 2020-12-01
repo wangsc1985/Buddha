@@ -12,6 +12,7 @@ namespace Buddha
 {
     public partial class Form2 : Form
     {
+        public DateTime datetime;
         public Form2()
         {
             InitializeComponent();
@@ -32,8 +33,16 @@ namespace Buddha
                 dc.Connect();
                 dc.AddRecord(new Record(time, 60000 * 10 * count, count, "", 0));
                 dc.Close();
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            datetime = dateTimePicker1.Value;
+            this.DialogResult = DialogResult.Yes;
+            this.Close();
         }
     }
 }
