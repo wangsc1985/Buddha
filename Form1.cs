@@ -74,7 +74,6 @@ namespace Buddha
             labelIndex.Text = "速度：" + fileIndex;
             labelCount.Text = "0";
             int hour = DateTime.Now.Hour;
-            labelSC.Text = dizhi[DizhiIndex(hour)] + "时";
             loadHistoryRecords();
         }
 
@@ -85,7 +84,14 @@ namespace Buddha
         string[] dizhi = new string[] { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子" };
         private void loadHistoryRecords()
         {
-            labelDate.Text = listDate.ToLongDateString();
+            if (listDate.DayOfYear == DateTime.Now.DayOfYear)
+            {
+                labelDate.Text = DateTime.Now.ToLongDateString() + "  " + dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+            }
+            else
+            {
+                labelDate.Text = DateTime.Now.ToLongDateString();
+            }
             string historyRecordstr = "";
             todayTotalCount = 0;
             var historyRecordsList = dataContext.GetRecords(listDate);
@@ -268,7 +274,10 @@ namespace Buddha
                 " : ", minite < 10 ? "0" + minite : minite + "",
                 " : ", second < 10 ? "0" + second : second + "");
             this.labelCount.Text = count + "";
-            labelSC.Text = dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+            if (listDate.DayOfYear == DateTime.Now.DayOfYear)
+            {
+            labelDate.Text =DateTime.Now.ToLongDateString()+"  "+ dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+            }
             if (count > 0)
             {
                 this.labelTime.ForeColor = Color.Red;
