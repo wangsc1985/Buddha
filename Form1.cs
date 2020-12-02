@@ -24,6 +24,7 @@ namespace Buddha
         int todayTotalCount = 0;
         double currentDuration = 0;
         DateTime currentStartTime;
+        DateTime listDate = DateTime.Today;
 
         DataContext dataContext = new DataContext();
         // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
@@ -82,11 +83,12 @@ namespace Buddha
             return (hour + 1) / 2;
         }
         string[] dizhi = new string[] { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子" };
-        private void loadHistoryRecords(DateTime date)
+        private void loadHistoryRecords()
         {
+            labelDate.Text = listDate.ToLongDateString();
             string historyRecordstr = "";
             todayTotalCount = 0;
-            var historyRecordsList = dataContext.GetRecords(date);
+            var historyRecordsList = dataContext.GetRecords(listDate);
             var preDZindex = -1;
             DateTime startTime = DateTime.Today;
             long duration = 0;
@@ -115,7 +117,7 @@ namespace Buddha
                             second < 10 ? "0" + second : second + "", $"      {count}", "\n");
                         todayTotalCount += count;
                         // 因为上面显示的是上一个时辰的数据，所以补加时辰应该在上一个时辰数据之后补加。
-                        for ( int i = preDZindex + 1; i < currDZindex; i++)
+                        for (int i = preDZindex + 1; i < currDZindex; i++)
                         {
                             historyRecordstr += dizhi[i] + "                                          \n";
                         }
@@ -139,13 +141,15 @@ namespace Buddha
                 todayTotalCount += count;
             }
 
+
+
             labelTotalCount.Text = todayTotalCount > 0 ? $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
             labelHistoryRecords.Text = historyRecordstr;
         }
-        private void loadHistoryRecords()
-        {
-            loadHistoryRecords(DateTime.Today);
-        }
+        //private void loadHistoryRecords()
+        //{
+        //    loadHistoryRecords(DateTime.Today);
+        //}
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -167,6 +171,17 @@ namespace Buddha
         {
             switch (e.KeyCode)
             {
+                case Keys.Left:
+                    listDate = listDate.AddDays(-1);
+                    loadHistoryRecords();
+                    break;
+                case Keys.Right:
+                    if (listDate.DayOfYear != DateTime.Today.DayOfYear)
+                    {
+                        listDate = listDate.AddDays(1);
+                        loadHistoryRecords();
+                    }
+                    break;
                 case Keys.Tab:
                     flowLayoutPanel2.Visible = !flowLayoutPanel2.Visible;
                     break;
@@ -281,22 +296,14 @@ namespace Buddha
 
         private void labelHistoryRecords_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.ShowDialog();
-            if (form2.DialogResult == DialogResult.Yes)
-                loadHistoryRecords(form2.datetime.AddHours(-1 * form2.datetime.Hour).AddMinutes(-1 * form2.datetime.Minute));
-            else
-                loadHistoryRecords();
+            listDate = DateTime.Today;
+            loadHistoryRecords();
         }
 
         private void flowLayoutPanel1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.ShowDialog();
-            if (form2.DialogResult == DialogResult.Yes)
-                loadHistoryRecords(form2.datetime.AddHours(-1 * form2.datetime.Hour).AddMinutes(-1 * form2.datetime.Minute));
-            else
-                loadHistoryRecords();
+            listDate = DateTime.Today;
+            loadHistoryRecords();
         }
     }
 

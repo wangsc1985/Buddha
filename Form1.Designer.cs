@@ -39,7 +39,10 @@
             this.labelTotalCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelDate = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label05 = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label01 = new System.Windows.Forms.Label();
@@ -50,6 +53,8 @@
             this.label07 = new System.Windows.Forms.Label();
             this.label08 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.labelIndex = new System.Windows.Forms.Label();
             this.labelSC = new System.Windows.Forms.Label();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -65,7 +70,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1006, 450);
+            this.pictureBox1.Size = new System.Drawing.Size(1006, 557);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -82,7 +87,7 @@
             this.labelTime.AutoSize = true;
             this.labelTime.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTime.ForeColor = System.Drawing.Color.White;
-            this.labelTime.Location = new System.Drawing.Point(12, 408);
+            this.labelTime.Location = new System.Drawing.Point(12, 515);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(167, 33);
             this.labelTime.TabIndex = 1;
@@ -105,7 +110,7 @@
             this.labelHistoryRecords.AutoSize = true;
             this.labelHistoryRecords.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelHistoryRecords.ForeColor = System.Drawing.Color.White;
-            this.labelHistoryRecords.Location = new System.Drawing.Point(3, 0);
+            this.labelHistoryRecords.Location = new System.Drawing.Point(3, 78);
             this.labelHistoryRecords.Name = "labelHistoryRecords";
             this.labelHistoryRecords.Size = new System.Drawing.Size(23, 33);
             this.labelHistoryRecords.TabIndex = 1;
@@ -133,7 +138,7 @@
             this.labelTotalCount.AutoSize = true;
             this.labelTotalCount.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTotalCount.ForeColor = System.Drawing.Color.White;
-            this.labelTotalCount.Location = new System.Drawing.Point(3, 45);
+            this.labelTotalCount.Location = new System.Drawing.Point(3, 156);
             this.labelTotalCount.Name = "labelTotalCount";
             this.labelTotalCount.Size = new System.Drawing.Size(39, 33);
             this.labelTotalCount.TabIndex = 1;
@@ -145,14 +150,17 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.labelHistoryRecords);
             this.flowLayoutPanel1.Controls.Add(this.label1);
-            this.flowLayoutPanel1.Controls.Add(this.labelTotalCount);
+            this.flowLayoutPanel1.Controls.Add(this.labelDate);
+            this.flowLayoutPanel1.Controls.Add(this.label8);
+            this.flowLayoutPanel1.Controls.Add(this.labelHistoryRecords);
             this.flowLayoutPanel1.Controls.Add(this.label2);
+            this.flowLayoutPanel1.Controls.Add(this.label7);
+            this.flowLayoutPanel1.Controls.Add(this.labelTotalCount);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(244, 393);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(244, 500);
             this.flowLayoutPanel1.TabIndex = 2;
             this.flowLayoutPanel1.Click += new System.EventHandler(this.labelHistoryRecords_Click);
             this.flowLayoutPanel1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.flowLayoutPanel1_MouseDoubleClick);
@@ -160,18 +168,61 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 33);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 12);
             this.label1.TabIndex = 2;
             // 
+            // labelDate
+            // 
+            this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDate.AutoSize = true;
+            this.labelDate.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDate.ForeColor = System.Drawing.Color.White;
+            this.labelDate.Location = new System.Drawing.Point(19, 12);
+            this.labelDate.Name = "labelDate";
+            this.labelDate.Size = new System.Drawing.Size(23, 33);
+            this.labelDate.TabIndex = 1;
+            this.labelDate.Text = " ";
+            this.labelDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelDate.Click += new System.EventHandler(this.labelHistoryRecords_Click);
+            this.labelDate.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelHistoryRecords_MouseDoubleClick);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(3, 45);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 33);
+            this.label8.TabIndex = 1;
+            this.label8.Text = " ";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label8.Click += new System.EventHandler(this.labelHistoryRecords_Click);
+            this.label8.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelHistoryRecords_MouseDoubleClick);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 78);
+            this.label2.Location = new System.Drawing.Point(3, 111);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 12);
             this.label2.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(3, 123);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(23, 33);
+            this.label7.TabIndex = 1;
+            this.label7.Text = " ";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label7.Click += new System.EventHandler(this.labelHistoryRecords_Click);
+            this.label7.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelHistoryRecords_MouseDoubleClick);
             // 
             // label05
             // 
@@ -202,10 +253,12 @@
             this.flowLayoutPanel2.Controls.Add(this.label07);
             this.flowLayoutPanel2.Controls.Add(this.label08);
             this.flowLayoutPanel2.Controls.Add(this.label10);
+            this.flowLayoutPanel2.Controls.Add(this.label3);
+            this.flowLayoutPanel2.Controls.Add(this.label6);
             this.flowLayoutPanel2.Controls.Add(this.labelIndex);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(711, 12);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(295, 393);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(295, 500);
             this.flowLayoutPanel2.TabIndex = 3;
             this.flowLayoutPanel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
@@ -310,15 +363,39 @@
             this.label10.TabIndex = 2;
             this.label10.Text = "label4";
             // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(3, 326);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(287, 32);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "人生至大  莫过生死";
+            this.label3.Click += new System.EventHandler(this.labelClose_Click);
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(3, 358);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(280, 35);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "label4";
+            // 
             // labelIndex
             // 
             this.labelIndex.AutoSize = true;
             this.labelIndex.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndex.ForeColor = System.Drawing.Color.White;
-            this.labelIndex.Location = new System.Drawing.Point(289, 291);
+            this.labelIndex.Location = new System.Drawing.Point(3, 393);
             this.labelIndex.Name = "labelIndex";
-            this.labelIndex.Size = new System.Drawing.Size(0, 33);
+            this.labelIndex.Size = new System.Drawing.Size(121, 33);
             this.labelIndex.TabIndex = 2;
+            this.labelIndex.Text = "速度：2";
             // 
             // labelSC
             // 
@@ -338,7 +415,7 @@
             this.flowLayoutPanel3.Controls.Add(this.labelCount);
             this.flowLayoutPanel3.Controls.Add(this.labelSC);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(794, 408);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(794, 515);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(200, 38);
             this.flowLayoutPanel3.TabIndex = 4;
@@ -348,7 +425,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1006, 450);
+            this.ClientSize = new System.Drawing.Size(1006, 557);
             this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -398,6 +475,11 @@
         private System.Windows.Forms.Label labelIndex;
         private System.Windows.Forms.Label labelSC;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelDate;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 
