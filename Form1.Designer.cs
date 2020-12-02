@@ -265,7 +265,7 @@
             this.label02.AutoSize = true;
             this.label02.BackColor = System.Drawing.Color.Transparent;
             this.label02.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label02.ForeColor = System.Drawing.Color.Red;
+            this.label02.ForeColor = System.Drawing.Color.White;
             this.label02.Location = new System.Drawing.Point(3, 96);
             this.label02.Name = "label02";
             this.label02.Size = new System.Drawing.Size(287, 32);
@@ -289,7 +289,7 @@
             this.label06.AutoSize = true;
             this.label06.BackColor = System.Drawing.Color.Transparent;
             this.label06.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label06.ForeColor = System.Drawing.Color.Red;
+            this.label06.ForeColor = System.Drawing.Color.White;
             this.label06.Location = new System.Drawing.Point(3, 195);
             this.label06.Name = "label06";
             this.label06.Size = new System.Drawing.Size(287, 32);

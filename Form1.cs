@@ -90,7 +90,7 @@ namespace Buddha
             }
             else
             {
-                labelDate.Text = DateTime.Now.ToLongDateString();
+                labelDate.Text = listDate.ToLongDateString();
             }
             string historyRecordstr = "";
             todayTotalCount = 0;
@@ -178,10 +178,14 @@ namespace Buddha
             switch (e.KeyCode)
             {
                 case Keys.Left:
+                    if (isPlaying)
+                        return;
                     listDate = listDate.AddDays(-1);
                     loadHistoryRecords();
                     break;
                 case Keys.Right:
+                    if (isPlaying)
+                        return;
                     if (listDate.DayOfYear != DateTime.Today.DayOfYear)
                     {
                         listDate = listDate.AddDays(1);
