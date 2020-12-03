@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ic_launcher.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
@@ -84,7 +84,6 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="MediaPlayer.cs" />
-    <Compile Include="Mp3Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
@@ -125,6 +124,7 @@
     <None Include="bin\Debug\1.mp3" />
     <None Include="bin\Debug\2.mp3" />
     <None Include="bin\Debug\3.mp3" />
+    <Content Include="icon.ico" />
     <Content Include="ic_launcher.ico" />
   </ItemGroup>
   <ItemGroup>

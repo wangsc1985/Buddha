@@ -162,6 +162,7 @@
             // 
             this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDate.AutoSize = true;
+            this.labelDate.BackColor = System.Drawing.Color.Transparent;
             this.labelDate.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelDate.ForeColor = System.Drawing.Color.White;
             this.labelDate.Location = new System.Drawing.Point(19, 0);
@@ -359,7 +360,9 @@
             // 
             // labelIndex
             // 
+            this.labelIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIndex.AutoSize = true;
+            this.labelIndex.BackColor = System.Drawing.Color.Transparent;
             this.labelIndex.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndex.ForeColor = System.Drawing.Color.White;
             this.labelIndex.Location = new System.Drawing.Point(3, 393);
@@ -367,6 +370,7 @@
             this.labelIndex.Size = new System.Drawing.Size(121, 33);
             this.labelIndex.TabIndex = 2;
             this.labelIndex.Text = "速度：2";
+            this.labelIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 

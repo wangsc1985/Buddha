@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
@@ -14,13 +15,11 @@ namespace Buddha
 {
     public partial class Form1 : Form
     {
-        public String exePath = Application.StartupPath;
-
         int screenWidth = 0;
         int screenHeight = 0;
         bool isPlaying = false;
 
-        MediaPlayer mediaPlayer = new MediaPlayer();
+        MediaPlayer mediaPlayer;
         int todayTotalCount = 0;
         double currentDuration = 0;
         DateTime currentStartTime;
@@ -70,10 +69,22 @@ namespace Buddha
             {
                 fileIndex = int.Parse(val);
             }
-            mediaPlayer.FileName = $"{exePath}\\{fileIndex}.mp3";
+
+            switch (fileIndex)
+            {
+                case 1:
+                    mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                    break;
+                case 2:
+                    mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                    break;
+                case 3:
+                    mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                    break;
+            }
+
             labelIndex.Text = "速度：" + fileIndex;
             labelCount.Text = "0";
-            int hour = DateTime.Now.Hour;
             loadHistoryRecords();
         }
 
@@ -147,8 +158,6 @@ namespace Buddha
                 todayTotalCount += count;
             }
 
-
-
             labelTotalCount.Text = todayTotalCount > 0 ? $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
             labelHistoryRecords.Text = historyRecordstr;
         }
@@ -199,8 +208,19 @@ namespace Buddha
                     if (fileIndex < 3)
                     {
                         mediaPlayer.Stop();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.FileName = $"{exePath}\\{++fileIndex}.mp3";
+                        fileIndex++;
+                        switch (fileIndex)
+                        {
+                            case 1:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                                break;
+                            case 2:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                                break;
+                            case 3:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                                break;
+                        }
                         mediaPlayer.play();
                         labelIndex.Text = "速度：" + fileIndex;
                         dataContext.EditSetting("fileIndex", fileIndex + "");
@@ -210,8 +230,19 @@ namespace Buddha
                     if (fileIndex > 1)
                     {
                         mediaPlayer.Stop();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.FileName = $"{exePath}\\{--fileIndex}.mp3";
+                        fileIndex--;
+                        switch (fileIndex)
+                        {
+                            case 1:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                                break;
+                            case 2:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                                break;
+                            case 3:
+                                mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                                break;
+                        }
                         mediaPlayer.play();
                         labelIndex.Text = "速度：" + fileIndex;
                         dataContext.EditSetting("fileIndex", fileIndex + "");
@@ -235,7 +266,7 @@ namespace Buddha
                         mediaPlayer.play();
                         isPlaying = true;
                         Fullscreen();
-                    }
+                     }
                     else
                     {
                         /**

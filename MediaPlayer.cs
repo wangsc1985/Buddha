@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -8,15 +9,54 @@ using System.Windows;
 
 namespace Buddha
 {
-
     /// <summary>
     /// clsMci 的摘要说明。
     /// </summary>
     public class MediaPlayer
     {
-        public MediaPlayer()
+        private string tmpPath = "d:\\buddha.mp3";
+        public MediaPlayer(string path)
         {
+            init(path);
         }
+        public MediaPlayer(byte[] res)
+        {
+            try
+            {
+                FileStream fs = new FileStream(tmpPath, FileMode.Create);
+                fs.Write(res, 0, res.Length);
+                fs.Close();
+                init(tmpPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void init(string path)
+        {
+            try
+            {
+                TemStr = "";
+                TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
+                Name = Name.PadLeft(260, Convert.ToChar(" "));
+                mediaPlayer.iName = path;
+                ilong = APIClass.GetShortPathName(mediaPlayer.iName, Name, Name.Length);
+                Name = GetCurrPath(Name);
+                Name = "open " + Convert.ToChar(34) + Name + Convert.ToChar(34) + " alias media";
+                ilong = APIClass.mciSendString("close all", TemStr, TemStr.Length, 0);
+                ilong = APIClass.mciSendString(Name, TemStr, TemStr.Length, 0);
+                ilong = APIClass.mciSendString("set media time format milliseconds", TemStr, TemStr.Length, 0);
+                mediaPlayer.state = State.mStop;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
         //定义API函数使用的字符串变量 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
         private string Name = "";
@@ -44,35 +84,6 @@ namespace Buddha
             public State state;
         };
         public structMediaPlayer mediaPlayer = new structMediaPlayer();
-        //取得播放文件属性
-        public string FileName
-        {
-            get
-            {
-                return mediaPlayer.iName;
-            }
-            set
-            {
-                try
-                {
-                    TemStr = "";
-                    TemStr = TemStr.PadLeft(127, Convert.ToChar(" "));
-                    Name = Name.PadLeft(260, Convert.ToChar(" "));
-                    mediaPlayer.iName = value;
-                    ilong = APIClass.GetShortPathName(mediaPlayer.iName, Name, Name.Length);
-                    Name = GetCurrPath(Name);
-                    Name = "open " + Convert.ToChar(34) + Name + Convert.ToChar(34) + " alias media";
-                    ilong = APIClass.mciSendString("close all", TemStr, TemStr.Length, 0);
-                    ilong = APIClass.mciSendString(Name, TemStr, TemStr.Length, 0);
-                    ilong = APIClass.mciSendString("set media time format milliseconds", TemStr, TemStr.Length, 0);
-                    mediaPlayer.state = State.mStop;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
         //播放
         public void play()
         {
@@ -89,6 +100,10 @@ namespace Buddha
             ilong = APIClass.mciSendString("close media", TemStr, 128, 0);
             ilong = APIClass.mciSendString("close all", TemStr, 128, 0);
             mediaPlayer.state = State.mStop;
+            if (mediaPlayer.iName.Equals(tmpPath))
+            {
+                File.Delete(tmpPath);
+            }
         }
         public void Pause()
         {
