@@ -74,16 +74,18 @@ namespace Buddha
             {
                 case 1:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                    labelIndex.Text = "L";
                     break;
                 case 2:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                    labelIndex.Text = "M";
                     break;
                 case 3:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                    labelIndex.Text = "H";
                     break;
             }
 
-            labelIndex.Text = "速度：" + fileIndex;
             labelCount.Text = "0";
             loadHistoryRecords();
         }
@@ -213,16 +215,19 @@ namespace Buddha
                         {
                             case 1:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                                labelIndex.Text = "L";
                                 break;
                             case 2:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                                labelIndex.Text = "M";
                                 break;
                             case 3:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                                labelIndex.Text = "H";
                                 break;
                         }
-                        mediaPlayer.play();
-                        labelIndex.Text = "速度：" + fileIndex;
+                        if (isPlaying)
+                            mediaPlayer.play();
                         dataContext.EditSetting("fileIndex", fileIndex + "");
                     }
                     break;
@@ -235,16 +240,19 @@ namespace Buddha
                         {
                             case 1:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
+                                labelIndex.Text = "L";
                                 break;
                             case 2:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
+                                labelIndex.Text = "M";
                                 break;
                             case 3:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
+                                labelIndex.Text = "H";
                                 break;
                         }
-                        mediaPlayer.play();
-                        labelIndex.Text = "速度：" + fileIndex;
+                        if (isPlaying)
+                            mediaPlayer.play();
                         dataContext.EditSetting("fileIndex", fileIndex + "");
                     }
                     break;
@@ -266,7 +274,7 @@ namespace Buddha
                         mediaPlayer.play();
                         isPlaying = true;
                         Fullscreen();
-                     }
+                    }
                     else
                     {
                         /**
@@ -311,7 +319,7 @@ namespace Buddha
             this.labelCount.Text = count + "";
             if (listDate.DayOfYear == DateTime.Now.DayOfYear)
             {
-            labelDate.Text =DateTime.Now.ToLongDateString()+"  "+ dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+                labelDate.Text = DateTime.Now.ToLongDateString() + "  " + dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
             }
             if (count > 0)
             {

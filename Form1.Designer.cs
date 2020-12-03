@@ -120,7 +120,7 @@
             this.labelWisdom.AutoSize = true;
             this.labelWisdom.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelWisdom.ForeColor = System.Drawing.Color.White;
-            this.labelWisdom.Location = new System.Drawing.Point(3, 0);
+            this.labelWisdom.Location = new System.Drawing.Point(5, 0);
             this.labelWisdom.Name = "labelWisdom";
             this.labelWisdom.Size = new System.Drawing.Size(287, 32);
             this.labelWisdom.TabIndex = 1;
@@ -203,7 +203,7 @@
             this.label05.BackColor = System.Drawing.Color.Transparent;
             this.label05.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label05.ForeColor = System.Drawing.Color.White;
-            this.label05.Location = new System.Drawing.Point(3, 163);
+            this.label05.Location = new System.Drawing.Point(5, 163);
             this.label05.Name = "label05";
             this.label05.Size = new System.Drawing.Size(287, 32);
             this.label05.TabIndex = 1;
@@ -228,6 +228,7 @@
             this.flowLayoutPanel2.Controls.Add(this.label3);
             this.flowLayoutPanel2.Controls.Add(this.label6);
             this.flowLayoutPanel2.Controls.Add(this.labelIndex);
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(711, 12);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(295, 500);
@@ -240,7 +241,7 @@
             this.label01.AutoSize = true;
             this.label01.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label01.ForeColor = System.Drawing.Color.White;
-            this.label01.Location = new System.Drawing.Point(3, 32);
+            this.label01.Location = new System.Drawing.Point(5, 32);
             this.label01.Name = "label01";
             this.label01.Size = new System.Drawing.Size(287, 32);
             this.label01.TabIndex = 1;
@@ -253,7 +254,7 @@
             this.label002.AutoSize = true;
             this.label002.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label002.ForeColor = System.Drawing.Color.White;
-            this.label002.Location = new System.Drawing.Point(3, 64);
+            this.label002.Location = new System.Drawing.Point(5, 64);
             this.label002.Name = "label002";
             this.label002.Size = new System.Drawing.Size(287, 32);
             this.label002.TabIndex = 1;
@@ -267,7 +268,7 @@
             this.label02.BackColor = System.Drawing.Color.Transparent;
             this.label02.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label02.ForeColor = System.Drawing.Color.White;
-            this.label02.Location = new System.Drawing.Point(3, 96);
+            this.label02.Location = new System.Drawing.Point(5, 96);
             this.label02.Name = "label02";
             this.label02.Size = new System.Drawing.Size(287, 32);
             this.label02.TabIndex = 1;
@@ -278,7 +279,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(3, 128);
+            this.label4.Location = new System.Drawing.Point(169, 128);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(123, 35);
             this.label4.TabIndex = 2;
@@ -291,7 +292,7 @@
             this.label06.BackColor = System.Drawing.Color.Transparent;
             this.label06.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label06.ForeColor = System.Drawing.Color.White;
-            this.label06.Location = new System.Drawing.Point(3, 195);
+            this.label06.Location = new System.Drawing.Point(5, 195);
             this.label06.Name = "label06";
             this.label06.Size = new System.Drawing.Size(287, 32);
             this.label06.TabIndex = 1;
@@ -305,7 +306,7 @@
             this.label07.BackColor = System.Drawing.Color.Transparent;
             this.label07.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label07.ForeColor = System.Drawing.Color.White;
-            this.label07.Location = new System.Drawing.Point(3, 227);
+            this.label07.Location = new System.Drawing.Point(5, 227);
             this.label07.Name = "label07";
             this.label07.Size = new System.Drawing.Size(287, 32);
             this.label07.TabIndex = 1;
@@ -319,7 +320,7 @@
             this.label08.BackColor = System.Drawing.Color.Transparent;
             this.label08.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label08.ForeColor = System.Drawing.Color.White;
-            this.label08.Location = new System.Drawing.Point(3, 259);
+            this.label08.Location = new System.Drawing.Point(5, 259);
             this.label08.Name = "label08";
             this.label08.Size = new System.Drawing.Size(287, 32);
             this.label08.TabIndex = 1;
@@ -329,7 +330,7 @@
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(3, 291);
+            this.label10.Location = new System.Drawing.Point(12, 291);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(280, 35);
             this.label10.TabIndex = 2;
@@ -342,7 +343,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(3, 326);
+            this.label3.Location = new System.Drawing.Point(5, 326);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(287, 32);
             this.label3.TabIndex = 1;
@@ -352,7 +353,7 @@
             // label6
             // 
             this.label6.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(3, 358);
+            this.label6.Location = new System.Drawing.Point(12, 358);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(280, 35);
             this.label6.TabIndex = 2;
@@ -365,11 +366,11 @@
             this.labelIndex.BackColor = System.Drawing.Color.Transparent;
             this.labelIndex.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndex.ForeColor = System.Drawing.Color.White;
-            this.labelIndex.Location = new System.Drawing.Point(3, 393);
+            this.labelIndex.Location = new System.Drawing.Point(253, 393);
             this.labelIndex.Name = "labelIndex";
-            this.labelIndex.Size = new System.Drawing.Size(121, 33);
+            this.labelIndex.Size = new System.Drawing.Size(39, 33);
             this.labelIndex.TabIndex = 2;
-            this.labelIndex.Text = "速度：2";
+            this.labelIndex.Text = "M";
             this.labelIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
