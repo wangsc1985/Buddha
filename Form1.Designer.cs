@@ -364,11 +364,11 @@
             this.labelIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIndex.AutoSize = true;
             this.labelIndex.BackColor = System.Drawing.Color.Transparent;
-            this.labelIndex.Font = new System.Drawing.Font("方正姚体", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelIndex.Font = new System.Drawing.Font("方正姚体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndex.ForeColor = System.Drawing.Color.White;
-            this.labelIndex.Location = new System.Drawing.Point(253, 393);
+            this.labelIndex.Location = new System.Drawing.Point(265, 393);
             this.labelIndex.Name = "labelIndex";
-            this.labelIndex.Size = new System.Drawing.Size(39, 33);
+            this.labelIndex.Size = new System.Drawing.Size(27, 23);
             this.labelIndex.TabIndex = 2;
             this.labelIndex.Text = "M";
             this.labelIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
