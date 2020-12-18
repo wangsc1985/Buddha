@@ -74,15 +74,15 @@ namespace Buddha
             {
                 case 1:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
-                    labelIndex.Text = "L";
+                    labelIndex.Text = "低";
                     break;
                 case 2:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
-                    labelIndex.Text = "M";
+                    labelIndex.Text = "中";
                     break;
                 case 3:
                     mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
-                    labelIndex.Text = "H";
+                    labelIndex.Text = "高";
                     break;
             }
 
@@ -110,11 +110,13 @@ namespace Buddha
             var historyRecordsList = dataContext.GetRecords(listDate);
             var preDZindex = -1;
             DateTime startTime = DateTime.Today;
+            long totalDuration = 0;
             long duration = 0;
             int count = 0;
             foreach (var record in historyRecordsList)
             {
                 var currDZindex = DizhiIndex(record.startDateTime.Hour);
+                totalDuration += record.duration;
 
                 // 如果当前记录和上一个记录在一个时辰内，则只累加不显示。
                 if (currDZindex == preDZindex)
@@ -160,7 +162,12 @@ namespace Buddha
                 todayTotalCount += count;
             }
 
-            labelTotalCount.Text = todayTotalCount > 0 ? $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
+            var s = (int)(totalDuration / 1000 % 60);
+            var m = (int)(totalDuration / (60 * 1000) % 60);
+            var h = (int)(totalDuration / (60 * 60 * 1000) % 60);
+            labelTotalCount.Text = todayTotalCount > 0 ? String.Concat($"{(h < 10 ? "0" + h : h + "")}", ":", $"{(m < 10 ? "0" + m : m + "")}", ":", $"{(s < 10 ? "0" + s : s + "")}     ")+$"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
+
+            //labelTotalTime.Text = todayTotalCount > 0 ? : "";
             labelHistoryRecords.Text = historyRecordstr;
         }
         //private void loadHistoryRecords()
@@ -168,6 +175,56 @@ namespace Buddha
         //    loadHistoryRecords(DateTime.Today);
         //}
 
+        private String loadMonthRecords()
+        {
+            DateTime end = listDate;
+            DateTime start = new DateTime(end.Year, end.Month, 1);
+
+            string historyRecordstr = "";
+            long totalDuration = 0;
+            int totalCount = 0;
+            while (start.DayOfYear <= end.DayOfYear)
+            {
+
+                var historyRecordsList = dataContext.GetRecords(start);
+                long duration = 0;
+                int count = 0;
+                foreach (var record in historyRecordsList)
+                {
+                    duration += record.duration;
+                    count += record.count;
+                }
+
+                if (count > 0)
+                {
+                    var second = (int)(duration / 1000 % 60);
+                    var minite = (int)(duration / (60 * 1000) % 60);
+                    var hour = (int)(duration / (60 * 60 * 1000) % 60);
+                    historyRecordstr += String.Concat($"{(start.Month<10?"0"+start.Month:start.Month+"")}月{(start.Day < 10 ? "0" + start.Day : start.Day + "")}日    ", hour < 10 ? "0" + hour : hour + "", ":",
+                        minite < 10 ? "0" + minite : minite + "", ":",
+                        second < 10 ? "0" + second : second + "", $"      {(count<10?"  "+count:count+"")}X1080={string.Format("{0:N0}", count *1080)}", "\n");
+                    todayTotalCount += count;
+                }
+                else
+                {
+                    historyRecordstr += $"{(start.Month < 10 ? "0" + start.Month : start.Month + "")}月{(start.Day < 10 ? "0" + start.Day : start.Day + "")}日" + "\n";
+                }
+                totalDuration += duration;
+                totalCount += count;
+                start = start.AddDays(1);
+            }
+            if (totalCount > 0)
+            {
+                var second = (int)(totalDuration / 1000 % 60);
+                var minite = (int)(totalDuration / (60 * 1000) % 60);
+                var hour = (int)(totalDuration / (60 * 60 * 1000) % 60);
+                historyRecordstr += String.Concat("\n                   ", hour < 10 ? "0" + hour : hour + "", ":",
+                    minite < 10 ? "0" + minite : minite + "", ":",
+                    second < 10 ? "0" + second : second + "", $"      {(totalCount < 10 ? "  " + totalCount : totalCount + "")}X1080={string.Format("{0:N0}", totalCount * 1080)}", "\n");
+                todayTotalCount += totalCount;
+            }
+            return historyRecordstr;
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             mediaPlayer.Stop();
@@ -215,15 +272,15 @@ namespace Buddha
                         {
                             case 1:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
-                                labelIndex.Text = "L";
+                                labelIndex.Text = "低";
                                 break;
                             case 2:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
-                                labelIndex.Text = "M";
+                                labelIndex.Text = "中";
                                 break;
                             case 3:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
-                                labelIndex.Text = "H";
+                                labelIndex.Text = "高";
                                 break;
                         }
                         if (isPlaying)
@@ -240,15 +297,15 @@ namespace Buddha
                         {
                             case 1:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha1);
-                                labelIndex.Text = "L";
+                                labelIndex.Text = "低";
                                 break;
                             case 2:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha2);
-                                labelIndex.Text = "M";
+                                labelIndex.Text = "中";
                                 break;
                             case 3:
                                 mediaPlayer = new MediaPlayer(Properties.Resources.buddha3);
-                                labelIndex.Text = "H";
+                                labelIndex.Text = "高";
                                 break;
                         }
                         if (isPlaying)
@@ -257,11 +314,19 @@ namespace Buddha
                     }
                     break;
                 case Keys.Escape:
-                    this.WindowState = FormWindowState.Minimized;
+                    if (isPlaying)
+                        this.WindowState = FormWindowState.Minimized;
+                    else
+                        this.Close();
                     break;
                 case Keys.Delete:
                     currentStartTime = DateTime.Now;
                     currentDuration = 0;
+                    if (!isPlaying)
+                    {
+                        this.labelTime.Text = "00 : 00 : 00";
+                        this.labelCount.Text = "0";
+                    }
                     break;
                 case Keys.Space:
                     if (isPlaying == false)
@@ -302,6 +367,20 @@ namespace Buddha
                     currentDuration = 0;
 
                     loadHistoryRecords();
+                    break;
+
+                case Keys.Q:
+                    if (this.panelDayInfo.Visible == true)
+                    {
+                        this.panelDayInfo.Visible = false;
+                        this.panelMonthInfo.Visible = true;
+                        labelMonth.Text = loadMonthRecords();
+                    }
+                    else
+                    {
+                        this.panelDayInfo.Visible = true;
+                        this.panelMonthInfo.Visible = false;
+                    }
                     break;
             }
         }
