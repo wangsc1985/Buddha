@@ -44,17 +44,16 @@
             this.label05 = new System.Windows.Forms.Label();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label06 = new System.Windows.Forms.Label();
+            this.label07 = new System.Windows.Forms.Label();
             this.label08 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label07 = new System.Windows.Forms.Label();
-            this.label06 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label002 = new System.Windows.Forms.Label();
             this.label02 = new System.Windows.Forms.Label();
             this.label01 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.labelIndex = new System.Windows.Forms.Label();
-            this.label002 = new System.Windows.Forms.Label();
             this.panelMonthInfo = new System.Windows.Forms.FlowLayoutPanel();
             this.labelMonth = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -124,11 +123,11 @@
             // 
             this.labelWisdom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelWisdom.AutoSize = true;
-            this.labelWisdom.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelWisdom.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelWisdom.ForeColor = System.Drawing.Color.White;
-            this.labelWisdom.Location = new System.Drawing.Point(4, 192);
+            this.labelWisdom.Location = new System.Drawing.Point(32, 141);
             this.labelWisdom.Name = "labelWisdom";
-            this.labelWisdom.Size = new System.Drawing.Size(287, 32);
+            this.labelWisdom.Size = new System.Drawing.Size(259, 30);
             this.labelWisdom.TabIndex = 1;
             this.labelWisdom.Text = "净土法门  一生成就";
             this.labelWisdom.Click += new System.EventHandler(this.labelClose_Click);
@@ -207,13 +206,13 @@
             this.label05.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label05.AutoSize = true;
             this.label05.BackColor = System.Drawing.Color.Transparent;
-            this.label05.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label05.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label05.ForeColor = System.Drawing.Color.White;
-            this.label05.Location = new System.Drawing.Point(4, 0);
+            this.label05.Location = new System.Drawing.Point(32, 0);
             this.label05.Name = "label05";
-            this.label05.Size = new System.Drawing.Size(287, 32);
+            this.label05.Size = new System.Drawing.Size(259, 30);
             this.label05.TabIndex = 1;
-            this.label05.Text = "外境诸缘  皆有因果";
+            this.label05.Text = "所缘诸境  皆有因果";
             this.label05.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // flowLayoutPanel2
@@ -239,88 +238,91 @@
             this.flowLayoutPanel3.Controls.Add(this.label07);
             this.flowLayoutPanel3.Controls.Add(this.label08);
             this.flowLayoutPanel3.Controls.Add(this.label10);
-            this.flowLayoutPanel3.Controls.Add(this.label4);
             this.flowLayoutPanel3.Controls.Add(this.labelWisdom);
             this.flowLayoutPanel3.Controls.Add(this.label002);
-            this.flowLayoutPanel3.Controls.Add(this.label02);
             this.flowLayoutPanel3.Controls.Add(this.label01);
+            this.flowLayoutPanel3.Controls.Add(this.label02);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(8, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(294, 357);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(294, 282);
             this.flowLayoutPanel3.TabIndex = 4;
-            // 
-            // label08
-            // 
-            this.label08.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label08.AutoSize = true;
-            this.label08.BackColor = System.Drawing.Color.Transparent;
-            this.label08.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label08.ForeColor = System.Drawing.Color.White;
-            this.label08.Location = new System.Drawing.Point(4, 96);
-            this.label08.Name = "label08";
-            this.label08.Size = new System.Drawing.Size(287, 32);
-            this.label08.TabIndex = 1;
-            this.label08.Text = "既消恶缘  又助往生";
-            this.label08.Click += new System.EventHandler(this.labelClose_Click);
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(11, 128);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(280, 35);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "label4";
-            // 
-            // label07
-            // 
-            this.label07.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label07.AutoSize = true;
-            this.label07.BackColor = System.Drawing.Color.Transparent;
-            this.label07.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label07.ForeColor = System.Drawing.Color.White;
-            this.label07.Location = new System.Drawing.Point(4, 64);
-            this.label07.Name = "label07";
-            this.label07.Size = new System.Drawing.Size(287, 32);
-            this.label07.TabIndex = 1;
-            this.label07.Text = "看破放下  一心念佛";
-            this.label07.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label06
             // 
             this.label06.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label06.AutoSize = true;
             this.label06.BackColor = System.Drawing.Color.Transparent;
-            this.label06.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label06.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label06.ForeColor = System.Drawing.Color.Red;
-            this.label06.Location = new System.Drawing.Point(4, 32);
+            this.label06.Location = new System.Drawing.Point(32, 30);
             this.label06.Name = "label06";
-            this.label06.Size = new System.Drawing.Size(287, 32);
+            this.label06.Size = new System.Drawing.Size(259, 30);
             this.label06.TabIndex = 1;
-            this.label06.Text = "殚精竭虑  只属妄想";
+            this.label06.Text = "殚精竭虑  全属妄想";
             this.label06.Click += new System.EventHandler(this.labelClose_Click);
             // 
-            // label4
+            // label07
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(188, 163);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 29);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "label4";
+            this.label07.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label07.AutoSize = true;
+            this.label07.BackColor = System.Drawing.Color.Transparent;
+            this.label07.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label07.ForeColor = System.Drawing.Color.White;
+            this.label07.Location = new System.Drawing.Point(32, 60);
+            this.label07.Name = "label07";
+            this.label07.Size = new System.Drawing.Size(259, 30);
+            this.label07.TabIndex = 1;
+            this.label07.Text = "看破放下  身心自在";
+            this.label07.Click += new System.EventHandler(this.labelClose_Click);
+            // 
+            // label08
+            // 
+            this.label08.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label08.AutoSize = true;
+            this.label08.BackColor = System.Drawing.Color.Transparent;
+            this.label08.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label08.ForeColor = System.Drawing.Color.White;
+            this.label08.Location = new System.Drawing.Point(32, 90);
+            this.label08.Name = "label08";
+            this.label08.Size = new System.Drawing.Size(259, 30);
+            this.label08.TabIndex = 1;
+            this.label08.Text = "消业除恶  命终往生";
+            this.label08.Click += new System.EventHandler(this.labelClose_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(215, 120);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(76, 21);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "label4";
+            // 
+            // label002
+            // 
+            this.label002.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label002.AutoSize = true;
+            this.label002.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label002.ForeColor = System.Drawing.Color.White;
+            this.label002.Location = new System.Drawing.Point(32, 171);
+            this.label002.Name = "label002";
+            this.label002.Size = new System.Drawing.Size(259, 30);
+            this.label002.TabIndex = 1;
+            this.label002.Text = "不知难逢  放逸懈怠";
+            this.label002.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label02
             // 
             this.label02.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label02.AutoSize = true;
             this.label02.BackColor = System.Drawing.Color.Transparent;
-            this.label02.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label02.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label02.ForeColor = System.Drawing.Color.Red;
-            this.label02.Location = new System.Drawing.Point(4, 256);
+            this.label02.Location = new System.Drawing.Point(32, 231);
             this.label02.Name = "label02";
-            this.label02.Size = new System.Drawing.Size(287, 32);
+            this.label02.Size = new System.Drawing.Size(259, 30);
             this.label02.TabIndex = 1;
             this.label02.Text = "大限到时  悔之晚矣";
             this.label02.Click += new System.EventHandler(this.labelClose_Click);
@@ -329,11 +331,11 @@
             // 
             this.label01.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label01.AutoSize = true;
-            this.label01.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label01.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label01.ForeColor = System.Drawing.Color.White;
-            this.label01.Location = new System.Drawing.Point(4, 288);
+            this.label01.Location = new System.Drawing.Point(32, 201);
             this.label01.Name = "label01";
-            this.label01.Size = new System.Drawing.Size(287, 32);
+            this.label01.Size = new System.Drawing.Size(259, 30);
             this.label01.TabIndex = 1;
             this.label01.Text = "今生错过  万劫难复";
             this.label01.Click += new System.EventHandler(this.labelClose_Click);
@@ -343,23 +345,25 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(15, 363);
+            this.label3.Location = new System.Drawing.Point(43, 288);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(287, 32);
+            this.label3.Size = new System.Drawing.Size(259, 30);
             this.label3.TabIndex = 1;
             this.label3.Text = "人生至大  莫过生死";
             this.label3.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label6
             // 
+            this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(8, 395);
+            this.label6.Location = new System.Drawing.Point(4, 318);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(294, 35);
+            this.label6.Size = new System.Drawing.Size(298, 29);
             this.label6.TabIndex = 2;
-            this.label6.Text = "label4";
+            this.label6.Tag = " ";
+            this.label6.Text = "                   ";
             // 
             // labelIndex
             // 
@@ -368,25 +372,12 @@
             this.labelIndex.BackColor = System.Drawing.Color.Transparent;
             this.labelIndex.Font = new System.Drawing.Font("方正姚体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndex.ForeColor = System.Drawing.Color.White;
-            this.labelIndex.Location = new System.Drawing.Point(277, 430);
+            this.labelIndex.Location = new System.Drawing.Point(277, 347);
             this.labelIndex.Name = "labelIndex";
             this.labelIndex.Size = new System.Drawing.Size(25, 18);
             this.labelIndex.TabIndex = 2;
             this.labelIndex.Text = "中";
             this.labelIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label002
-            // 
-            this.label002.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label002.AutoSize = true;
-            this.label002.Font = new System.Drawing.Font("华文隶书", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label002.ForeColor = System.Drawing.Color.White;
-            this.label002.Location = new System.Drawing.Point(4, 224);
-            this.label002.Name = "label002";
-            this.label002.Size = new System.Drawing.Size(287, 32);
-            this.label002.TabIndex = 1;
-            this.label002.Text = "不思难逢  放逸懈怠";
-            this.label002.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // panelMonthInfo
             // 
@@ -439,6 +430,7 @@
             this.Controls.Add(this.panelDayInfo);
             this.Controls.Add(this.labelTime);
             this.Controls.Add(this.pictureBox1);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "老实念佛";
@@ -473,7 +465,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label05;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label02;
         private System.Windows.Forms.Label label06;
         private System.Windows.Forms.Label label07;

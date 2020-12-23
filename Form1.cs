@@ -433,8 +433,8 @@ namespace Buddha
 
         private void flowLayoutPanel1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            listDate = DateTime.Today;
-            loadHistoryRecords();
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
         }
     }
 

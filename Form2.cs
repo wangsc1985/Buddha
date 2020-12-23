@@ -18,20 +18,20 @@ namespace Buddha
             InitializeComponent();
             numericUpDown2.Value = DateTime.Now.Hour;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            var now = DateTime.Now;
-            DateTime time = dateTimePicker1.Value;
-            time = time.AddHours ((int)numericUpDown2.Value-now.Hour);
-            time = time.AddMinutes(-now.Minute);
+            var time = dateTimePicker1.Value;
+            time = time.AddHours(-(double)(time.Hour));
+            time = time.AddHours((double)numericUpDown2.Value);
+            time = time.AddMinutes(-time.Minute);
+            time = time.AddSeconds(-time.Second);
             int count = (int)numericUpDown1.Value;
 
             if (count > 0)
             {
                 DataContext dc = new DataContext();
                 dc.Connect();
-                dc.AddRecord(new Record(time, 60000 * 10 * count, count, "", 0));
+                dc.AddRecord(new Record(time, 60000 * 12 * count, count, "", 0));
                 dc.Close();
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -43,6 +43,10 @@ namespace Buddha
             datetime = dateTimePicker1.Value;
             this.DialogResult = DialogResult.Yes;
             this.Close();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
         }
     }
 }
