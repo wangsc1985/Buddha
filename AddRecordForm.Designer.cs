@@ -1,6 +1,6 @@
 ﻿namespace Buddha
 {
-    partial class Form2
+    partial class AddRecordForm
     {
         /// <summary>
         /// Required designer variable.

@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Buddha
 {
-    public partial class Form2 : Form
+    public partial class AddRecordForm : Form
     {
         public DateTime datetime;
-        public Form2()
+        public AddRecordForm()
         {
             InitializeComponent();
             numericUpDown2.Value = DateTime.Now.Hour;

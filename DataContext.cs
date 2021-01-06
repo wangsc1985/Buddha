@@ -75,6 +75,7 @@ namespace Buddha
                 $"values ('{Utils.ConvertDateTimeToLong(model.startDateTime)}','{model.duration}','{model.count}','{model.summury}','{model.type}','{model.dateStr}')";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
+            CloudUtils.uploadRecord(model);
         }
         public void AddRecords(List<Record> models)
         {

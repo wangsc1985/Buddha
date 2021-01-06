@@ -1,6 +1,6 @@
 ﻿namespace Buddha
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelTime = new System.Windows.Forms.Label();
@@ -49,8 +49,8 @@
             this.label08 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label002 = new System.Windows.Forms.Label();
-            this.label02 = new System.Windows.Forms.Label();
             this.label01 = new System.Windows.Forms.Label();
+            this.label02 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.labelIndex = new System.Windows.Forms.Label();
@@ -313,6 +313,19 @@
             this.label002.Text = "不知难逢  放逸懈怠";
             this.label002.Click += new System.EventHandler(this.labelClose_Click);
             // 
+            // label01
+            // 
+            this.label01.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label01.AutoSize = true;
+            this.label01.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label01.ForeColor = System.Drawing.Color.White;
+            this.label01.Location = new System.Drawing.Point(32, 201);
+            this.label01.Name = "label01";
+            this.label01.Size = new System.Drawing.Size(259, 30);
+            this.label01.TabIndex = 1;
+            this.label01.Text = "今生错过  万劫难复";
+            this.label01.Click += new System.EventHandler(this.labelClose_Click);
+            // 
             // label02
             // 
             this.label02.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -326,19 +339,6 @@
             this.label02.TabIndex = 1;
             this.label02.Text = "大限到时  悔之晚矣";
             this.label02.Click += new System.EventHandler(this.labelClose_Click);
-            // 
-            // label01
-            // 
-            this.label01.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label01.AutoSize = true;
-            this.label01.Font = new System.Drawing.Font("华文隶书", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label01.ForeColor = System.Drawing.Color.White;
-            this.label01.Location = new System.Drawing.Point(32, 201);
-            this.label01.Name = "label01";
-            this.label01.Size = new System.Drawing.Size(259, 30);
-            this.label01.TabIndex = 1;
-            this.label01.Text = "今生错过  万劫难复";
-            this.label01.Click += new System.EventHandler(this.labelClose_Click);
             // 
             // label3
             // 
@@ -418,7 +418,7 @@
             this.label9.Size = new System.Drawing.Size(0, 12);
             this.label9.TabIndex = 3;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -432,7 +432,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "老实念佛";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);

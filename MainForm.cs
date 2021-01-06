@@ -1,19 +1,13 @@
-﻿using System;
+﻿using Buddha.helper;
+using LitJson;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Media;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Buddha
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         int screenWidth = 0;
         int screenHeight = 0;
@@ -25,16 +19,27 @@ namespace Buddha
         DateTime currentStartTime;
         DateTime listDate = DateTime.Today;
 
+
         DataContext dataContext = new DataContext();
         // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             //Fullscreen();
             PauseScreen();
             dataContext.Connect();
+            var set = dataContext.getSettingValue("loadTime");
+            if (set != null)
+            {
+                CloudUtils.loadRecords(Utils.ConvertLongToDateTime(Convert.ToInt64(set)));
+            }
+            else
+            {
+                CloudUtils.loadRecords(new DateTime(1970,1,1));
+            }
         }
+
 
         private void Fullscreen()
         {
@@ -165,7 +170,7 @@ namespace Buddha
             var s = (int)(totalDuration / 1000 % 60);
             var m = (int)(totalDuration / (60 * 1000) % 60);
             var h = (int)(totalDuration / (60 * 60 * 1000) % 60);
-            labelTotalCount.Text = todayTotalCount > 0 ? String.Concat($"{(h < 10 ? "0" + h : h + "")}", ":", $"{(m < 10 ? "0" + m : m + "")}", ":", $"{(s < 10 ? "0" + s : s + "")}     ")+$"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
+            labelTotalCount.Text = todayTotalCount > 0 ? String.Concat($"{(h < 10 ? "0" + h : h + "")}", ":", $"{(m < 10 ? "0" + m : m + "")}", ":", $"{(s < 10 ? "0" + s : s + "")}     ") + $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
 
             //labelTotalTime.Text = todayTotalCount > 0 ? : "";
             labelHistoryRecords.Text = historyRecordstr;
@@ -183,9 +188,8 @@ namespace Buddha
             string historyRecordstr = "";
             long totalDuration = 0;
             int totalCount = 0;
-            while (start.DayOfYear <= end.DayOfYear)
+            while (start.Year==end.Year&& start.DayOfYear <= end.DayOfYear)
             {
-
                 var historyRecordsList = dataContext.GetRecords(start);
                 long duration = 0;
                 int count = 0;
@@ -200,9 +204,9 @@ namespace Buddha
                     var second = (int)(duration / 1000 % 60);
                     var minite = (int)(duration / (60 * 1000) % 60);
                     var hour = (int)(duration / (60 * 60 * 1000) % 60);
-                    historyRecordstr += String.Concat($"{(start.Month<10?"0"+start.Month:start.Month+"")}月{(start.Day < 10 ? "0" + start.Day : start.Day + "")}日    ", hour < 10 ? "0" + hour : hour + "", ":",
+                    historyRecordstr += String.Concat($"{(start.Month < 10 ? "0" + start.Month : start.Month + "")}月{(start.Day < 10 ? "0" + start.Day : start.Day + "")}日    ", hour < 10 ? "0" + hour : hour + "", ":",
                         minite < 10 ? "0" + minite : minite + "", ":",
-                        second < 10 ? "0" + second : second + "", $"      {(count<10?"  "+count:count+"")}X1080={string.Format("{0:N0}", count *1080)}", "\n");
+                        second < 10 ? "0" + second : second + "", $"      {(count < 10 ? "  " + count : count + "")}X1080={string.Format("{0:N0}", count * 1080)}", "\n");
                     todayTotalCount += count;
                 }
                 else
@@ -433,8 +437,17 @@ namespace Buddha
 
         private void flowLayoutPanel1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Form2 form2 = new Form2();
+            AddRecordForm form2 = new AddRecordForm();
             form2.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataContext dc = new DataContext();
+            dc.Connect();
+            var list = dc.GetAllRecords();
+            dc.Close();
+            CloudUtils.uploadRecords(list);
         }
     }
 
