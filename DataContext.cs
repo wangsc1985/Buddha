@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Buddha.CloudUtils;
 
 namespace Buddha
 {
@@ -69,13 +70,13 @@ namespace Buddha
                 return reader["value"].ToString();
             return null;
         }
+        private delegate void FormControlInvoker();
         public void AddRecord(Record model)
         {
             string sql = $"insert into Record (startDateTime, duration,count, summury,type,dateStr) " +
                 $"values ('{Utils.ConvertDateTimeToLong(model.startDateTime)}','{model.duration}','{model.count}','{model.summury}','{model.type}','{model.dateStr}')";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
-            CloudUtils.uploadRecord(model);
         }
         public void AddRecords(List<Record> models)
         {
@@ -116,10 +117,21 @@ namespace Buddha
             return result;
         }
 
+        public Record GetLatestRecord()
+        {
+            string sql = $"select * from Record order by startDateTime desc";
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+               return new Record(Utils.ConvertLongToDateTime(long.Parse(reader["startDateTime"].ToString())), long.Parse(reader["duration"].ToString()),
+                    int.Parse(reader["count"].ToString()), reader["summury"].ToString(), int.Parse(reader["type"].ToString()));
+            return null;
+        }
+
         public List<Record> GetAllRecords()
         {
             List<Record> result = new List<Record>();
-            string sql = $"select * from Record";
+            string sql = $"select * from Record order by startDateTime";
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())

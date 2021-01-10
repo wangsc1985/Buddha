@@ -20,7 +20,7 @@ namespace Buddha
         DateTime listDate = DateTime.Today;
 
 
-        DataContext dataContext = new DataContext();
+        DataContext dc = new DataContext();
         // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
 
         public MainForm()
@@ -28,15 +28,21 @@ namespace Buddha
             InitializeComponent();
             //Fullscreen();
             PauseScreen();
-            dataContext.Connect();
-            var set = dataContext.getSettingValue("loadTime");
-            if (set != null)
+            dc.Connect();
+            var record = dc.GetLatestRecord();
+            if (record != null)
             {
-                CloudUtils.loadRecords(Utils.ConvertLongToDateTime(Convert.ToInt64(set)));
+                CloudUtils.loadRecords(record.startDateTime, (code,msg) =>
+                {
+                    loadHistoryRecords();
+                });
             }
             else
             {
-                CloudUtils.loadRecords(new DateTime(1970,1,1));
+                CloudUtils.loadRecords(new DateTime(1970, 1, 1), (code, msg) =>
+                {
+                    loadHistoryRecords();
+                });
             }
         }
 
@@ -69,7 +75,7 @@ namespace Buddha
         private int fileIndex = 3;
         private void Form1_Load(object sender, EventArgs e)
         {
-            var val = dataContext.getSettingValue("fileIndex");
+            var val = dc.getSettingValue("fileIndex");
             if (val != null)
             {
                 fileIndex = int.Parse(val);
@@ -92,7 +98,6 @@ namespace Buddha
             }
 
             labelCount.Text = "0";
-            loadHistoryRecords();
         }
 
         private int DizhiIndex(int hour)
@@ -102,17 +107,21 @@ namespace Buddha
         string[] dizhi = new string[] { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子" };
         private void loadHistoryRecords()
         {
-            if (listDate.DayOfYear == DateTime.Now.DayOfYear)
+            this.Invoke(new FormControlInvoker(() =>
             {
-                labelDate.Text = DateTime.Now.ToLongDateString() + "  " + dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
-            }
-            else
-            {
-                labelDate.Text = listDate.ToLongDateString();
-            }
+
+                if (listDate.DayOfYear == DateTime.Now.DayOfYear)
+                {
+                    labelDate.Text = DateTime.Now.ToLongDateString() + "  " + dizhi[DizhiIndex(DateTime.Now.Hour)] + "时";
+                }
+                else
+                {
+                    labelDate.Text = listDate.ToLongDateString();
+                }
+            }));
             string historyRecordstr = "";
             todayTotalCount = 0;
-            var historyRecordsList = dataContext.GetRecords(listDate);
+            var historyRecordsList = dc.GetRecords(listDate);
             var preDZindex = -1;
             DateTime startTime = DateTime.Today;
             long totalDuration = 0;
@@ -170,15 +179,14 @@ namespace Buddha
             var s = (int)(totalDuration / 1000 % 60);
             var m = (int)(totalDuration / (60 * 1000) % 60);
             var h = (int)(totalDuration / (60 * 60 * 1000) % 60);
-            labelTotalCount.Text = todayTotalCount > 0 ? String.Concat($"{(h < 10 ? "0" + h : h + "")}", ":", $"{(m < 10 ? "0" + m : m + "")}", ":", $"{(s < 10 ? "0" + s : s + "")}     ") + $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
 
-            //labelTotalTime.Text = todayTotalCount > 0 ? : "";
-            labelHistoryRecords.Text = historyRecordstr;
+            this.Invoke(new FormControlInvoker(() =>
+            {
+                labelTotalCount.Text = todayTotalCount > 0 ? String.Concat($"{(h < 10 ? "0" + h : h + "")}", ":", $"{(m < 10 ? "0" + m : m + "")}", ":", $"{(s < 10 ? "0" + s : s + "")}     ") + $"{ string.Format("{0:N0}", todayTotalCount * 1080)} = 1080 X {todayTotalCount}" : "";
+                labelHistoryRecords.Text = historyRecordstr;
+            }));
         }
-        //private void loadHistoryRecords()
-        //{
-        //    loadHistoryRecords(DateTime.Today);
-        //}
+
 
         private String loadMonthRecords()
         {
@@ -188,9 +196,9 @@ namespace Buddha
             string historyRecordstr = "";
             long totalDuration = 0;
             int totalCount = 0;
-            while (start.Year==end.Year&& start.DayOfYear <= end.DayOfYear)
+            while (start.Year == end.Year && start.DayOfYear <= end.DayOfYear)
             {
-                var historyRecordsList = dataContext.GetRecords(start);
+                var historyRecordsList = dc.GetRecords(start);
                 long duration = 0;
                 int count = 0;
                 foreach (var record in historyRecordsList)
@@ -229,6 +237,7 @@ namespace Buddha
             }
             return historyRecordstr;
         }
+        private delegate void FormControlInvoker();
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             mediaPlayer.Stop();
@@ -240,9 +249,13 @@ namespace Buddha
             var cc = (int)(currentDuration / (60 * 1000 * 10));
             if (cc > 0)
             {
-                dataContext.AddRecord(new Record(currentStartTime, (long)currentDuration, cc, "", 0));
+                var record = new Record(currentStartTime, (long)currentDuration, cc, "计时计数念佛", 11);
+                dc.AddRecord(record);
+                CloudUtils.uploadRecord(record, (code, msg) => {
+                    MessageBox.Show(msg);
+                });
             }
-            dataContext.Close();
+            dc.Close();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -289,7 +302,7 @@ namespace Buddha
                         }
                         if (isPlaying)
                             mediaPlayer.play();
-                        dataContext.EditSetting("fileIndex", fileIndex + "");
+                        dc.EditSetting("fileIndex", fileIndex + "");
                     }
                     break;
                 case Keys.Down:
@@ -314,7 +327,7 @@ namespace Buddha
                         }
                         if (isPlaying)
                             mediaPlayer.play();
-                        dataContext.EditSetting("fileIndex", fileIndex + "");
+                        dc.EditSetting("fileIndex", fileIndex + "");
                     }
                     break;
                 case Keys.Escape:
@@ -361,8 +374,11 @@ namespace Buddha
                     var cc = (int)(dd / (60 * 1000 * 10));
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
-
-                    dataContext.AddRecord(new Record(currentStartTime, (long)dd, cc, "", 0));
+                    var record = new Record(currentStartTime, (long)dd, cc, "计时计数念佛", 11);
+                    dc.AddRecord(record);
+                    CloudUtils.uploadRecord(record, (code, msg) => {
+                        MessageBox.Show(msg);
+                    });
                     this.labelTime.ForeColor = Color.White;
                     this.labelCount.ForeColor = Color.White;
                     this.labelTime.Text = "00 : 00 : 00";
@@ -441,14 +457,6 @@ namespace Buddha
             form2.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            DataContext dc = new DataContext();
-            dc.Connect();
-            var list = dc.GetAllRecords();
-            dc.Close();
-            CloudUtils.uploadRecords(list);
-        }
     }
 
 }

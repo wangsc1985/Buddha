@@ -8,7 +8,7 @@ namespace Buddha
 {
     class Setting
     {
-        public string Key;
-        public string Value;
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -140,9 +140,9 @@
             this.labelTotalCount.ForeColor = System.Drawing.Color.White;
             this.labelTotalCount.Location = new System.Drawing.Point(3, 84);
             this.labelTotalCount.Name = "labelTotalCount";
-            this.labelTotalCount.Size = new System.Drawing.Size(28, 24);
+            this.labelTotalCount.Size = new System.Drawing.Size(16, 24);
             this.labelTotalCount.TabIndex = 1;
-            this.labelTotalCount.Text = " 0";
+            this.labelTotalCount.Text = " ";
             // 
             // panelDayInfo
             // 
@@ -170,7 +170,7 @@
             this.labelDate.BackColor = System.Drawing.Color.Transparent;
             this.labelDate.Font = new System.Drawing.Font("方正姚体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelDate.ForeColor = System.Drawing.Color.White;
-            this.labelDate.Location = new System.Drawing.Point(15, 0);
+            this.labelDate.Location = new System.Drawing.Point(3, 0);
             this.labelDate.Name = "labelDate";
             this.labelDate.Size = new System.Drawing.Size(16, 24);
             this.labelDate.TabIndex = 1;
@@ -426,10 +426,10 @@
             this.ClientSize = new System.Drawing.Size(1006, 557);
             this.Controls.Add(this.labelCount);
             this.Controls.Add(this.flowLayoutPanel2);
-            this.Controls.Add(this.panelMonthInfo);
             this.Controls.Add(this.panelDayInfo);
             this.Controls.Add(this.labelTime);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.panelMonthInfo);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
