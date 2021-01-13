@@ -32,7 +32,7 @@ namespace Buddha
             var record = dc.GetLatestRecord();
             if (record != null)
             {
-                CloudUtils.loadRecords(record.startDateTime, (code,msg) =>
+                CloudUtils.loadRecords(record.startDateTime, (code, msg) =>
                 {
                     loadHistoryRecords();
                 });
@@ -251,7 +251,8 @@ namespace Buddha
             {
                 var record = new Record(currentStartTime, (long)currentDuration, cc, "计时计数念佛", 11);
                 dc.AddRecord(record);
-                CloudUtils.uploadRecord(record, (code, msg) => {
+                CloudUtils.uploadRecord(record, (code, msg) =>
+                {
                     MessageBox.Show(msg);
                 });
             }
@@ -376,7 +377,8 @@ namespace Buddha
                         return;
                     var record = new Record(currentStartTime, (long)dd, cc, "计时计数念佛", 11);
                     dc.AddRecord(record);
-                    CloudUtils.uploadRecord(record, (code, msg) => {
+                    CloudUtils.uploadRecord(record, (code, msg) =>
+                    {
                         MessageBox.Show(msg);
                     });
                     this.labelTime.ForeColor = Color.White;
@@ -390,17 +392,7 @@ namespace Buddha
                     break;
 
                 case Keys.Q:
-                    if (this.panelDayInfo.Visible == true)
-                    {
-                        this.panelDayInfo.Visible = false;
-                        this.panelMonthInfo.Visible = true;
-                        labelMonth.Text = loadMonthRecords();
-                    }
-                    else
-                    {
-                        this.panelDayInfo.Visible = true;
-                        this.panelMonthInfo.Visible = false;
-                    }
+                    MessageBox.Show(loadMonthRecords());
                     break;
             }
         }

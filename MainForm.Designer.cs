@@ -54,14 +54,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.labelIndex = new System.Windows.Forms.Label();
-            this.panelMonthInfo = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelMonth = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelDayInfo.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
-            this.panelMonthInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -379,37 +376,6 @@
             this.labelIndex.Text = "中";
             this.labelIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // panelMonthInfo
-            // 
-            this.panelMonthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.panelMonthInfo.AutoScroll = true;
-            this.panelMonthInfo.AutoSize = true;
-            this.panelMonthInfo.Controls.Add(this.labelMonth);
-            this.panelMonthInfo.Controls.Add(this.label9);
-            this.panelMonthInfo.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.panelMonthInfo.Location = new System.Drawing.Point(12, 12);
-            this.panelMonthInfo.Name = "panelMonthInfo";
-            this.panelMonthInfo.Size = new System.Drawing.Size(244, 468);
-            this.panelMonthInfo.TabIndex = 2;
-            this.panelMonthInfo.Visible = false;
-            this.panelMonthInfo.Click += new System.EventHandler(this.labelHistoryRecords_Click);
-            this.panelMonthInfo.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.flowLayoutPanel1_MouseDoubleClick);
-            // 
-            // labelMonth
-            // 
-            this.labelMonth.AutoSize = true;
-            this.labelMonth.Font = new System.Drawing.Font("方正姚体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelMonth.ForeColor = System.Drawing.Color.White;
-            this.labelMonth.Location = new System.Drawing.Point(3, 0);
-            this.labelMonth.Name = "labelMonth";
-            this.labelMonth.Size = new System.Drawing.Size(16, 24);
-            this.labelMonth.TabIndex = 1;
-            this.labelMonth.Text = " ";
-            this.labelMonth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelMonth.Click += new System.EventHandler(this.labelHistoryRecords_Click);
-            this.labelMonth.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.labelHistoryRecords_MouseDoubleClick);
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -429,7 +395,6 @@
             this.Controls.Add(this.panelDayInfo);
             this.Controls.Add(this.labelTime);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.panelMonthInfo);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
@@ -445,8 +410,6 @@
             this.flowLayoutPanel2.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
-            this.panelMonthInfo.ResumeLayout(false);
-            this.panelMonthInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,8 +441,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label002;
-        private System.Windows.Forms.FlowLayoutPanel panelMonthInfo;
-        private System.Windows.Forms.Label labelMonth;
         private System.Windows.Forms.Label label9;
     }
 }
