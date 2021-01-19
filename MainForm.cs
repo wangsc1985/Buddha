@@ -3,6 +3,7 @@ using LitJson;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Buddha
@@ -18,6 +19,7 @@ namespace Buddha
         double currentDuration = 0;
         DateTime currentStartTime;
         DateTime listDate = DateTime.Today;
+        private delegate void FormControlInvoker();
 
 
         DataContext dc = new DataContext();
@@ -29,6 +31,7 @@ namespace Buddha
             //Fullscreen();
             PauseScreen();
             dc.Connect();
+
             var record = dc.GetLatestRecord();
             if (record != null)
             {
@@ -44,6 +47,7 @@ namespace Buddha
                     loadHistoryRecords();
                 });
             }
+
         }
 
 
@@ -237,7 +241,7 @@ namespace Buddha
             }
             return historyRecordstr;
         }
-        private delegate void FormControlInvoker();
+
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             mediaPlayer.Stop();
@@ -253,7 +257,9 @@ namespace Buddha
                 dc.AddRecord(record);
                 CloudUtils.uploadRecord(record, (code, msg) =>
                 {
-                    MessageBox.Show(msg);
+                    this.Invoke(new FormControlInvoker(() => {
+                        MessageBox.Show(msg);
+                    }));
                 });
             }
             dc.Close();
@@ -371,15 +377,23 @@ namespace Buddha
                     }
                     break;
                 case Keys.Enter:
-                    var dd = isPlaying ? DateTime.Now.Subtract(currentStartTime).TotalMilliseconds : 0 + currentDuration;
+                    var dd = isPlaying ? (DateTime.Now.Subtract(currentStartTime).TotalMilliseconds +currentDuration): (0 + currentDuration);
                     var cc = (int)(dd / (60 * 1000 * 10));
                     if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
                         return;
+
+                    var tmpStartTime = DateTime.Now.AddMilliseconds(-1*dd);
+                    if (currentStartTime > tmpStartTime)
+                    {
+                        currentStartTime = tmpStartTime;
+                    }
                     var record = new Record(currentStartTime, (long)dd, cc, "计时计数念佛", 11);
                     dc.AddRecord(record);
                     CloudUtils.uploadRecord(record, (code, msg) =>
                     {
-                        MessageBox.Show(msg);
+                        this.Invoke(new FormControlInvoker(() => {
+                            MessageBox.Show(msg);
+                        }));
                     });
                     this.labelTime.ForeColor = Color.White;
                     this.labelCount.ForeColor = Color.White;
