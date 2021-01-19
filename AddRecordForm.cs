@@ -35,9 +35,9 @@ namespace Buddha
                 var record = new Record(time, 60000 * 12 * count, count, "计时计数念佛", 11);
                 dc.AddRecord(record);
                 CloudUtils.uploadRecord(record, (code,msg) => {
-                    this.Invoke(new FormControlInvoker(() => {
+                    //this.Invoke(new FormControlInvoker(() => {
                         MessageBox.Show(msg);
-                    }));
+                    //}));
                 });
                 dc.Close();
                 this.DialogResult = DialogResult.OK;

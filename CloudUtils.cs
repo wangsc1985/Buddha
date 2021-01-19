@@ -136,8 +136,8 @@ namespace Buddha
 
         public static void uploadRecord(Record record, CloudResponseFinished callBack)
         {
-            new Thread(new ThreadStart(() =>
-            {
+            //new Thread(new ThreadStart(() =>
+            //{
                 try
                 {
                     string access_token = getToken();
@@ -159,7 +159,7 @@ namespace Buddha
                 {
                     callBack(-1, ex.Message);
                 }
-            })).Start();
+            //})).Start();
         }
     }
 }

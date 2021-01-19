@@ -257,9 +257,9 @@ namespace Buddha
                 dc.AddRecord(record);
                 CloudUtils.uploadRecord(record, (code, msg) =>
                 {
-                    this.Invoke(new FormControlInvoker(() => {
+                    //this.Invoke(new FormControlInvoker(() => {
                         MessageBox.Show(msg);
-                    }));
+                    //}));
                 });
             }
             dc.Close();
@@ -391,9 +391,9 @@ namespace Buddha
                     dc.AddRecord(record);
                     CloudUtils.uploadRecord(record, (code, msg) =>
                     {
-                        this.Invoke(new FormControlInvoker(() => {
+                        //this.Invoke(new FormControlInvoker(() => {
                             MessageBox.Show(msg);
-                        }));
+                        //}));
                     });
                     this.labelTime.ForeColor = Color.White;
                     this.labelCount.ForeColor = Color.White;
