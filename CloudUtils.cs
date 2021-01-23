@@ -25,11 +25,10 @@ namespace Buddha
             {
                 try
                 {
-                    DataContext dc = new DataContext();
-                    dc.Connect();
+                    //DataContext dc = new DataContext();
+                    //dc.Connect();
                     List<Record> result = new List<Record>();
                     string access_token = getToken();
-
                     string url = $"https://api.weixin.qq.com/tcb/invokecloudfunction?access_token={access_token}&env={env}&name=loadBuddha";
                     string body = "{\"phone\":\"18509513143\",\"startTime\":\"" + Utils.ConvertDateTimeToLong(startTime) + "\"}";
                     string html = HttpHelper.PostHttpByJson(url, body);
@@ -50,10 +49,10 @@ namespace Buddha
                             result.Add(new Record(time, duration, count, summary, type));
                         }
 
-                        dc.AddRecords(result);
+                        MainForm.dc.AddRecords(result);
                     }
-                    dc.EditSetting("loadTime", Utils.ConvertDateTimeToLong(DateTime.Now) + "");
-                    dc.Close();
+                    MainForm.dc.EditSetting("loadTime", Utils.ConvertDateTimeToLong(DateTime.Now) + "");
+                    //dc.Close();
 
 
                     callBack(0, "云端下载完毕！");
@@ -68,34 +67,33 @@ namespace Buddha
 
         private static string getToken()
         {
-            DataContext dc = new DataContext();
-            dc.Connect();
-            string set = dc.getSettingValue("expires");
+            //DataContext dc = new DataContext();
+            //dc.Connect();
+            string set = MainForm.dc.getSettingValue("expires");
             if (set != null)
             {
                 DateTime now = DateTime.Now;
-                DateTime expires = Utils.ConvertLongToDateTime(Convert.ToInt64(set.Substring(0, set.IndexOf("."))));
+                DateTime expires = Utils.ConvertLongToDateTime(Convert.ToInt64(set.IndexOf(".")>0?set.Substring(0, set.IndexOf(".")):set));
                 if (expires.Subtract(now).TotalMilliseconds > 0)
                 {
-                    return dc.getSettingValue("token");
+                    return MainForm.dc.getSettingValue("token");
                 }
             }
 
             string html = HttpHelper.GetHttp($"https://sahacloudmanager.azurewebsites.net/home/token/{appid}/{secret}");
-
             var data = html.Split(':');
             string access_token = data[0];
-            dc.EditSetting("token", access_token);
-            dc.EditSetting("expires", data[1]);
-            dc.Close();
+            MainForm.dc.EditSetting("token", access_token);
+            MainForm.dc.EditSetting("expires", data[1]);
+            //dc.Close();
             return access_token;
         }
 
 
         public static void uploadRecords(List<Record> records, CloudResponseFinished callBack)
         {
-            new Thread(new ThreadStart(() =>
-            {
+            //new Thread(new ThreadStart(() =>
+            //{
                 try
                 {
                     string access_token = getToken();
@@ -122,43 +120,53 @@ namespace Buddha
                     sb.Append("}");
                     string html = HttpHelper.PostHttpByJson(url, sb.ToString());
                     JsonData jsonData = JsonMapper.ToObject(html);
-                    if (jsonData["errcode"].ToString().Equals("0"))
+
+
+                    //val resp_data: Any = _JsonUtils.getValueByKey(html, "resp_data")
+                    //val code = _JsonUtils.getValueByKey(resp_data.toString(), "code").toInt()
+                    //val msg = _JsonUtils.getValueByKey(resp_data.toString(), "msg")
+
+                    var resp_data = JsonMapper.ToObject(jsonData["resp_data"].ToString());
+                    var code =resp_data["code"].ToString();
+                    var msg = resp_data["msg"].ToString();
+
+                    if (code.ToString().Equals("0"))
                     {
-                        callBack(0, "上传云端完毕！");
+                        callBack(0,msg.ToString());
                     }
                 }
                 catch (Exception ex)
                 {
                     callBack(-1, ex.Message);
                 }
-            })).Start();
+            //})).Start();
         }
 
         public static void uploadRecord(Record record, CloudResponseFinished callBack)
         {
             //new Thread(new ThreadStart(() =>
             //{
-                try
+            try
+            {
+                string access_token = getToken();
+                string url = $"https://api.weixin.qq.com/tcb/invokecloudfunction?access_token={access_token}&env={env}&name=addBuddha";
+                string body = "{\"phone\":\"18509513143\"" +
+                    ",\"startTime\":\"" + Utils.ConvertDateTimeToLong(record.startDateTime) + "\"" +
+                    ",\"duration\":\"" + record.duration + "\"" +
+                    ",\"count\":\"" + record.count + "\"" +
+                    ",\"summary\":\"" + record.summury + "\"" +
+                    ",\"type\":\"" + record.type + "\"}";
+                string html = HttpHelper.PostHttpByJson(url, body);
+                JsonData jsonData = JsonMapper.ToObject(html);
+                if (jsonData["errcode"].ToString().Equals("0"))
                 {
-                    string access_token = getToken();
-                    string url = $"https://api.weixin.qq.com/tcb/invokecloudfunction?access_token={access_token}&env={env}&name=addBuddha";
-                    string body = "{\"phone\":\"18509513143\"" +
-                        ",\"startTime\":\"" + Utils.ConvertDateTimeToLong(record.startDateTime) + "\"" +
-                        ",\"duration\":\"" + record.duration + "\"" +
-                        ",\"count\":\"" + record.count + "\"" +
-                        ",\"summary\":\"" + record.summury + "\"" +
-                        ",\"type\":\"" + record.type + "\"}";
-                    string html = HttpHelper.PostHttpByJson(url, body);
-                    JsonData jsonData = JsonMapper.ToObject(html);
-                    if (jsonData["errcode"].ToString().Equals("0"))
-                    {
-                        callBack(0, "上传云端完毕！");
-                    }
+                    callBack(0, "上传云端完毕！");
                 }
-                catch (Exception ex)
-                {
-                    callBack(-1, ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                callBack(-1, ex.Message);
+            }
             //})).Start();
         }
     }

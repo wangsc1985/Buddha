@@ -22,7 +22,7 @@ namespace Buddha
         private delegate void FormControlInvoker();
 
 
-        DataContext dc = new DataContext();
+        public static DataContext dc = new DataContext();
         // 当前念佛窗口从打开到关闭，储存的一个过程的record，每次按enter键就会保存到当前record中
 
         public MainForm()
@@ -35,6 +35,7 @@ namespace Buddha
             var record = dc.GetLatestRecord();
             if (record != null)
             {
+                //MessageBox.Show(record.startDateTime.ToLongDateString()+"  "+record.startDateTime.ToLongTimeString());
                 CloudUtils.loadRecords(record.startDateTime, (code, msg) =>
                 {
                     loadHistoryRecords();
@@ -258,7 +259,7 @@ namespace Buddha
                 CloudUtils.uploadRecord(record, (code, msg) =>
                 {
                     //this.Invoke(new FormControlInvoker(() => {
-                        MessageBox.Show(msg);
+                    MessageBox.Show(msg);
                     //}));
                 });
             }
@@ -377,32 +378,75 @@ namespace Buddha
                     }
                     break;
                 case Keys.Enter:
-                    var dd = isPlaying ? (DateTime.Now.Subtract(currentStartTime).TotalMilliseconds +currentDuration): (0 + currentDuration);
-                    var cc = (int)(dd / (60 * 1000 * 10));
-                    if (currentStartTime.Year != DateTime.Now.Year || cc < 1)
+                    var duration = isPlaying ? (DateTime.Now.Subtract(currentStartTime).TotalMilliseconds + currentDuration) : (0 + currentDuration);
+                    var count = (int)(duration / (600000));
+                    var avgDuration = duration / count;
+                    if (currentStartTime.Year != DateTime.Now.Year || count < 1)
                         return;
 
-                    var tmpStartTime = DateTime.Now.AddMilliseconds(-1*dd);
-                    if (currentStartTime > tmpStartTime)
+                    /**
+                     * 生成并添加buddha
+                     **/
+                    var newBuddhaList = new List<Record>();
+                    var latestBuddha = dc.GetLatestRecord();
+                    for (int i = count; i > 0; i--)
                     {
-                        currentStartTime = tmpStartTime;
+                        var startTime = DateTime.Now;
+                        startTime = startTime.AddMilliseconds(-1 * avgDuration * i);
+                        newBuddhaList.Add(new Record(startTime, (long)avgDuration, 1, "计时计数念佛", 11));
                     }
-                    var record = new Record(currentStartTime, (long)dd, cc, "计时计数念佛", 11);
-                    dc.AddRecord(record);
-                    CloudUtils.uploadRecord(record, (code, msg) =>
-                    {
-                        //this.Invoke(new FormControlInvoker(() => {
-                            MessageBox.Show(msg);
-                        //}));
-                    });
-                    this.labelTime.ForeColor = Color.White;
-                    this.labelCount.ForeColor = Color.White;
-                    this.labelTime.Text = "00 : 00 : 00";
-                    this.labelCount.Text = "0";
-                    currentStartTime = DateTime.Now;
-                    currentDuration = 0;
+                    dc.AddRecords(newBuddhaList);
 
-                    loadHistoryRecords();
+                    /**
+                     * 整合数据
+                     */
+                    var uploadList = Utils.IntegrateBuddhaList(latestBuddha.startDateTime);
+
+                    /**
+                     * 上传数据
+                     */
+                    CloudUtils.uploadRecords(uploadList, (code, result) => {
+                        if (code == 0)
+                        {
+                            this.labelTime.ForeColor = Color.White;
+                            this.labelCount.ForeColor = Color.White;
+                            this.labelTime.Text = "00 : 00 : 00";
+                            this.labelCount.Text = "0";
+                            currentStartTime = DateTime.Now;
+                            currentDuration = 0;
+
+                            loadHistoryRecords();
+                        }
+                        MessageBox.Show(result);
+                    });
+
+
+                    //Utils.buildBuddhaListAndSave(count, DateTime.Now, (long)avgDuration, (code, result) =>
+                    // {
+                    //     if (code == 0)
+                    //     {
+                    //         this.labelTime.ForeColor = Color.White;
+                    //         this.labelCount.ForeColor = Color.White;
+                    //         this.labelTime.Text = "00 : 00 : 00";
+                    //         this.labelCount.Text = "0";
+                    //         currentStartTime = DateTime.Now;
+                    //         currentDuration = 0;
+
+                    //         loadHistoryRecords();
+                    //     }
+                    //     MessageBox.Show(result);
+                    // });
+
+
+                    //var record = new Record(currentStartTime, (long)dd, cc, "计时计数念佛", 11);
+                    //dc.AddRecord(record);
+                    //CloudUtils.uploadRecord(record, (code, msg) =>
+                    //{
+                    //    //this.Invoke(new FormControlInvoker(() => {
+                    //        MessageBox.Show(msg);
+                    //    //}));
+                    //});
+
                     break;
 
                 case Keys.Q:
@@ -460,7 +504,10 @@ namespace Buddha
         private void flowLayoutPanel1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             AddRecordForm form2 = new AddRecordForm();
-            form2.ShowDialog();
+            if (form2.ShowDialog() == DialogResult.OK)
+            {
+                loadHistoryRecords();
+            }
         }
 
     }

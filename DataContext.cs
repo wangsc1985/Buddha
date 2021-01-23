@@ -9,7 +9,7 @@ using static Buddha.CloudUtils;
 
 namespace Buddha
 {
-    class DataContext
+    public class DataContext
     {
         private static string database = "data.db";
         //数据库连接
@@ -42,7 +42,7 @@ namespace Buddha
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
         }
-        public void EditSetting(string key,string value)
+        public void EditSetting(string key, string value)
         {
             if (getSettingValue(key) == null)
             {
@@ -60,7 +60,7 @@ namespace Buddha
                 command.ExecuteNonQuery();
             }
         }
-        public string getSettingValue(string key) 
+        public string getSettingValue(string key)
         {
             Setting result = new Setting();
             string sql = $"select * from Setting where key = '{key}'";
@@ -98,7 +98,7 @@ namespace Buddha
                 $"type = '{model.type}'," +
                 $"dateStr = '{model.dateStr}' " +
                 $"where startDateTime='{Utils.ConvertDateTimeToLong(model.startDateTime)}'";
-            
+
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
         }
@@ -123,9 +123,33 @@ namespace Buddha
             SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
-               return new Record(Utils.ConvertLongToDateTime(long.Parse(reader["startDateTime"].ToString())), long.Parse(reader["duration"].ToString()),
-                    int.Parse(reader["count"].ToString()), reader["summury"].ToString(), int.Parse(reader["type"].ToString()));
+                return new Record(Utils.ConvertLongToDateTime(long.Parse(reader["startDateTime"].ToString())), long.Parse(reader["duration"].ToString()),
+                     int.Parse(reader["count"].ToString()), reader["summury"].ToString(), int.Parse(reader["type"].ToString()));
             return null;
+        }
+
+        public List<Record> GetBuddhaListStartDate(DateTime dateTime)
+        {
+            var startTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
+            List<Record> result = new List<Record>();
+            string sql = $"select * from Record where startDateTime>={Utils.ConvertDateTimeToLong(startTime)} order by startDateTime";
+            SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                result.Add(new Record(Utils.ConvertLongToDateTime(long.Parse(reader["startDateTime"].ToString())), long.Parse(reader["duration"].ToString()),
+                    int.Parse(reader["count"].ToString()), reader["summury"].ToString(), int.Parse(reader["type"].ToString())));
+            return result;
+        }
+
+        public void DeleteRecodeList(List<Record> removeRecords)
+        {
+            //DELETE FROM Person WHERE LastName = 'Wilson'
+            foreach (var record in removeRecords)
+            {
+                string sql = $"delete from Record where startDateTime='{Utils.ConvertDateTimeToLong(record.startDateTime)}'";
+                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
+                command.ExecuteNonQuery();
+            }
         }
 
         public List<Record> GetAllRecords()

@@ -30,18 +30,41 @@ namespace Buddha
 
             if (count > 0)
             {
-                DataContext dc = new DataContext();
-                dc.Connect();
-                var record = new Record(time, 60000 * 12 * count, count, "计时计数念佛", 11);
-                dc.AddRecord(record);
-                CloudUtils.uploadRecord(record, (code,msg) => {
-                    //this.Invoke(new FormControlInvoker(() => {
-                        MessageBox.Show(msg);
-                    //}));
+                /**
+                 * 生成并添加buddha
+                 **/
+                //var dc = new DataContext();
+                //dc.Connect();
+                var newBuddhaList = new List<Record>();
+                var latestBuddha = MainForm.dc.GetLatestRecord();
+                var avgDuration = 600000;
+                for(int i = count; i > 0; i--)
+                {
+                    var startTime = DateTime.Now;
+                    startTime = startTime.AddMilliseconds(-1*avgDuration*i);
+                    newBuddhaList.Add(new Record(startTime, avgDuration, 1, "计时计数念佛", 11));
+                }
+                MainForm.dc.AddRecords(newBuddhaList);
+
+                /**
+                 * 整合数据
+                 */
+                var uploadList = Utils.IntegrateBuddhaList(latestBuddha.startDateTime);
+
+                /**
+                 * 上传数据
+                 */
+                CloudUtils.uploadRecords(uploadList, (code, result) =>
+                {
+                    if (code == 0)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    MessageBox.Show(result);
                 });
-                dc.Close();
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+
+                //dc.Close();
             }
         }
 
